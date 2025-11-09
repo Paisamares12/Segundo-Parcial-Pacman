@@ -2,6 +2,27 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/TipoFruta.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/app/ClientePrincipal.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/MarcoCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/PanelControles.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/PanelJuegoCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/app/ServidorPrincipal.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/ConstantesJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/Direccion.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/data/registroPuntajes.properties</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/EstadoJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/Fruta.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/LimitesTablero.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/Pacman.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/Posicion.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioFrutas.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioPuntaje.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioTiempo.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/MarcoJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/PanelHud.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/PanelJuego.java</file>
+        </group>
     </open-files>
 </project-private>
