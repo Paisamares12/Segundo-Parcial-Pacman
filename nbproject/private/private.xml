@@ -2,6 +2,28 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/Imagenes/Comida.png</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/EstadoJuego.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/Pacman.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/Fruta.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/TipoFruta.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/Posicion.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/LimitesTablero.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/vista/servidor/MarcoJuego.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/vista/servidor/PanelJuego.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/vista/servidor/PanelHud.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/vista/cliente/MarcoCliente.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/vista/cliente/PanelControles.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/vista/cliente/PanelJuegoCliente.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/app/ServidorPrincipal.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/app/ClientePrincipal.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/Direccion.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/modelo/ConstantesJuego.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/data/registroPuntajes.properties</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servicios/ServicioFrutas.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servicios/ServicioPuntaje.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servicios/ServicioTiempo.java</file>
+        </group>
     </open-files>
 </project-private>
