@@ -22,7 +22,7 @@ import java.util.List;
  * @version 2.0
  * @since 2025-11-09
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuarioDAO {
     
     /** Instancia de la conexión a la base de datos */
     private ConexionBD conexionBD;
@@ -222,5 +222,30 @@ public class UsuarioDAO {
         }
         
         return false;
+    }
+
+    @Override
+    public JugadorVO buscarPorUsuario(String usuario) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean crear(JugadorVO jugador) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean actualizar(JugadorVO jugador) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean eliminar(String usuario) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<JugadorVO> listarTodos() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
