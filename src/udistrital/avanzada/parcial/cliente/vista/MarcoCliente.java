@@ -1,7 +1,8 @@
 package udistrital.avanzada.parcial.cliente.vista;
 
 import udistrital.avanzada.parcial.cliente.control.ControlCliente;
-import udistrital.avanzada.parcial.cliente.modelo.ClienteEstado;
+import udistrital.avanzada.parcial.cliente.api.EstadoClienteObservable;
+import udistrital.avanzada.parcial.cliente.api.EventosCliente;
 import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import java.beans.PropertyChangeListener;
  * red.</p>
  *
  * @author Paula Martinez
- * @version 1.0
+ * @version 3.0
  * @since 2025-11-09
  */
 public class MarcoCliente extends JFrame implements PropertyChangeListener {
@@ -31,7 +32,7 @@ public class MarcoCliente extends JFrame implements PropertyChangeListener {
      * Referencias inyectadas desde el composition root.
      */
     private ControlCliente control;
-    private ClienteEstado estado;
+    private EstadoClienteObservable estado; // en lugar de ClienteEstado
 
     public MarcoCliente() {
         super("Cliente Pac-Man – Espectador");
@@ -59,7 +60,7 @@ public class MarcoCliente extends JFrame implements PropertyChangeListener {
     /**
      * La vista se suscribe al estado (modelo observable del cliente).
      */
-    public void setEstado(ClienteEstado estado) {
+    public void setEstado(EstadoClienteObservable estado) {
         if (this.estado != null) {
             this.estado.removePropertyChangeListener(this);
         }
@@ -82,16 +83,16 @@ public class MarcoCliente extends JFrame implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case ClienteEstado.PROP_SNAPSHOT -> {
+            case EventosCliente.SNAPSHOT -> {
                 SnapshotTablero snap = (SnapshotTablero) evt.getNewValue();
                 panelJuego.setSnapshot(snap);
                 panelJuego.repaint();
             }
-            case ClienteEstado.PROP_MOV_HABILITADO -> {
+            case EventosCliente.MOV_HABILITADO -> {
                 boolean on = (boolean) evt.getNewValue();
                 panelControles.habilitarMovimiento(on);
             }
-            case ClienteEstado.PROP_LOG -> {
+            case EventosCliente.LOG -> {
                 String msg = (String) evt.getNewValue();
                 if (msg != null && !msg.isEmpty()) {
                     areaMensajes.append(msg + "\n");

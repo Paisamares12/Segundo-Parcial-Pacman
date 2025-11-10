@@ -112,5 +112,6 @@ public class SnapshotTablero implements Serializable {
     public String setDireccionPacman(){
         return direccionPacman;
     }
+    
 
 }
