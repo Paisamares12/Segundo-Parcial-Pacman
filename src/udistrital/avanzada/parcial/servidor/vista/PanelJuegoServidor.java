@@ -1,6 +1,6 @@
 package udistrital.avanzada.parcial.servidor.vista;
 
-import udistrital.avanzada.parcial.servidor.modelo.*;
+import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,9 +28,9 @@ import java.awt.*;
 public class PanelJuegoServidor extends JPanel {
 
     /**
-     * Estado del juego a renderizar (inyectado desde la ventana/controlador).
+     * Último snapshot enviado por el servidor (datos compactos para pintar).
      */
-    private EstadoJuego estado;
+    private SnapshotTablero snapshot;
 
     /**
      * Color del Pac-Man.
@@ -57,55 +57,55 @@ public class PanelJuegoServidor extends JPanel {
     }
 
     /**
-     * Establece el estado del juego a dibujar.
+     * Establece el snapshot actual a dibujar. Este método lo llama
+     * {@link MarcoServidor#cargarSnapshot(SnapshotTablero)}.
      *
-     * @param estado estado actual (no nulo)
+     * @param snapshot datos del tablero (puede ser null)
      */
-    public void setEstado(EstadoJuego estado) {
-        this.estado = estado;
+    public void setSnapshot(SnapshotTablero snapshot) {
+        this.snapshot = snapshot;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (estado == null) {
-            dibujarMensaje((Graphics2D) g, "Sin estado vinculado…");
+        if (snapshot == null) {
+            g.setColor(Color.GRAY);
+            g.drawString("Esperando snapshot del juego...", getWidth() / 3, getHeight() / 2);
             return;
         }
-        Graphics2D g2 = (Graphics2D) g.create();
-        try {
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // 1) Límites
-            LimitesTablero lim = estado.getLimites();
-            g2.setColor(Color.DARK_GRAY);
-            g2.setStroke(STROKE_BORDE);
-            int minX = lim.getMinX(), minY = lim.getMinY();
-            int w = Math.max(0, lim.getMaxX() - lim.getMinX());
-            int h = Math.max(0, lim.getMaxY() - lim.getMinY());
-            g2.drawRect(minX, minY, w, h);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // 2) Pac-Man
-            g2.setColor(COLOR_PACMAN);
-            int px = estado.getPacman().getPosicion().getX();
-            int py = estado.getPacman().getPosicion().getY();
-            int diam = 10;
-            g2.fillOval(px - diam / 2, py - diam / 2, diam, diam);
+        // Dibujar límites
+        g2.setColor(Color.DARK_GRAY);
+        int minX = snapshot.getLimiteMinX();
+        int minY = snapshot.getLimiteMinY();
+        int ancho = snapshot.getLimiteMaxX() - snapshot.getLimiteMinX();
+        int alto = snapshot.getLimiteMaxY() - snapshot.getLimiteMinY();
+        g2.drawRect(minX, minY, ancho, alto);
 
-            // 3) Frutas
-            g2.setColor(COLOR_FRUTA);
-            int sz = 8;
-            for (Fruta f : estado.getFrutas()) {
-                if (f.isComida()) {
-                    continue;
-                }
-                int fx = f.getPosicion().getX();
-                int fy = f.getPosicion().getY();
-                g2.fillRect(fx - sz / 2, fy - sz / 2, sz, sz);
+        // Dibujar Pac-Man
+        g2.setColor(Color.YELLOW);
+        int px = snapshot.getPacmanX();
+        int py = snapshot.getPacmanY();
+        g2.fillOval(px - 5, py - 5, 10, 10);
+
+        // Dibujar frutas
+        g2.setColor(Color.RED);
+        for (int i = 0; i < snapshot.getNumFrutas(); i++) {
+            if (snapshot.isFrutaComida(i)) {
+                continue;
             }
-        } finally {
-            g2.dispose();
+            int fx = snapshot.getFrutaX(i);
+            int fy = snapshot.getFrutaY(i);
+            g2.fillRect(fx - 4, fy - 4, 8, 8);
         }
+
+        // Dibujar puntaje opcional
+        g2.setColor(Color.BLACK);
+        g2.drawString("Puntaje: " + snapshot.getPuntaje(), minX + 8, minY + 16);
     }
 
     /**

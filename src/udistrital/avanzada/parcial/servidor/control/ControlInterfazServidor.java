@@ -1,6 +1,6 @@
 package udistrital.avanzada.parcial.servidor.control;
 
-import udistrital.avanzada.parcial.servidor.modelo.EstadoJuego;
+import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 import udistrital.avanzada.parcial.servidor.vista.MarcoServidor;
 
 import javax.swing.SwingUtilities;
@@ -58,24 +58,27 @@ public class ControlInterfazServidor {
     }
 
     /**
-     * Vincula el estado del juego para que el panel de render pueda dibujarlo.
+     * Carga el snapshot actual en la vista para que el panel de juego lo
+     * dibuje.
      *
-     * @param estado instancia del estado del juego (no nula)
+     * @param snapshot estado compacto del tablero
      */
-    public void vincularEstado(EstadoJuego estado) {
-        SwingUtilities.invokeLater(() -> vista.vincularEstado(estado));
+    public void cargarSnapshot(SnapshotTablero snapshot) {
+        SwingUtilities.invokeLater(() -> {
+            vista.cargarSnapshot(snapshot);
+            vista.refrescar();
+        });
     }
 
     /**
-     * Actualiza el HUD y repinta el tablero a partir del estado más reciente.
+     * Actualiza el HUD (puntaje y tiempo) y refresca la vista.
      *
-     * @param estado estado de juego con el puntaje actual
-     * @param tiempoMs tiempo transcurrido (en milisegundos) provisto por un
-     * servicio de tiempo
+     * @param puntaje puntaje acumulado
+     * @param tiempoMs tiempo transcurrido en milisegundos
      */
-    public void refrescarDesdeEstado(EstadoJuego estado, long tiempoMs) {
+    public void actualizarHUD(int puntaje, long tiempoMs) {
         SwingUtilities.invokeLater(() -> {
-            vista.actualizarHUD(estado.getPuntaje(), tiempoMs);
+            vista.actualizarHUD(puntaje, tiempoMs);
             vista.refrescar();
         });
     }
