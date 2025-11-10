@@ -3,6 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioFrutas.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioPuntaje.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioTiempo.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/vista/MarcoServidor.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/app/ClientePrincipal.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/vista/MarcoCliente.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/vista/PanelControles.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/vista/PanelJuegoCliente.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/control/ControlCliente.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/mensajes/SnapshotTablero.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/mensajes/ComandoMovimiento.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/app/ServidorPrincipal.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/vista/PanelJuegoServidor.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/vista/PanelHUD.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlInterfazServidor.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/vista/IClienteUI.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlJuego.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/vista/Iconos.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/control/ControlInterfazCliente.java</file>
+            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/cliente/modelo/ClienteEstado.java</file>
+=======
             <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/app/ServidorPrincipal.java</file>
             <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/ClienteEstado.java</file>
             <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/UsuarioVO.java</file>
@@ -21,6 +43,7 @@
             <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlInterfazServidor.java</file>
             <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlJuego.java</file>
             <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/app/InicializadorBD.java</file>
+>>>>>>> master
         </group>
     </open-files>
 </project-private>

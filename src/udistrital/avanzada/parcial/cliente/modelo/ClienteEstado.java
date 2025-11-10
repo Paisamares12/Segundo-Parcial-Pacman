@@ -3,6 +3,7 @@ package udistrital.avanzada.parcial.cliente.modelo;
 import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import udistrital.avanzada.parcial.cliente.api.EstadoClienteObservable;
 
 /**
  * Estado observable del cliente (lado UI).
@@ -15,7 +16,7 @@ import java.beans.PropertyChangeSupport;
  * @version 1.0
  * @since 2025-11-09
  */
-public class ClienteEstado {
+public class ClienteEstado implements EstadoClienteObservable {
 
     public static final String PROP_SNAPSHOT = "snapshot";
     public static final String PROP_MOV_HABILITADO = "movHabilitado";

@@ -1,6 +1,6 @@
 package udistrital.avanzada.parcial.servidor.vista;
 
-import udistrital.avanzada.parcial.servidor.modelo.EstadoJuego;
+import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,15 +18,15 @@ import java.awt.*;
  * <h3>Uso típico</h3>
  * <ol>
  * <li>Crear la ventana y mostrarla.</li>
- * <li>Vincular el {@link EstadoJuego} cuando el controlador lo tenga
- * listo.</li>
- * <li>Llamar a {@link #refrescar()} tras cada movimiento o cambio de
+ * <li>Llamar a {@link #cargarSnapshot(SnapshotTablero)} al actualizar el
  * estado.</li>
+ * <li>Llamar a {@link #actualizarHUD(int, long)} y {@link #refrescar()} tras
+ * cada cambio.</li>
  * </ol>
  *
  * @author Paula Martinez
  * @version 1.0
- * @since 2025-11-09
+ * @since 2025-11-10
  */
 public class MarcoServidor extends JFrame {
 
@@ -63,12 +63,12 @@ public class MarcoServidor extends JFrame {
     }
 
     /**
-     * Vincula el estado del juego para que el panel de render pueda dibujarlo.
+     * Carga el snapshot más reciente para que el panel de juego lo pinte.
      *
-     * @param estado instancia de {@link EstadoJuego} (no nula)
+     * @param snapshot estado compacto del tablero
      */
-    public void vincularEstado(EstadoJuego estado) {
-        panelJuego.setEstado(estado);
+    public void cargarSnapshot(SnapshotTablero snapshot) {
+        panelJuego.setSnapshot(snapshot);
     }
 
     /**
