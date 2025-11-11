@@ -1,66 +1,83 @@
 package udistrital.avanzada.parcial.servidor.app;
 
-import java.io.*;
-import java.net.*;
+import udistrital.avanzada.parcial.servidor.red.ManejadorCliente;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
- * Clase principal del lado del servidor para el juego Pac-Man distribuido.
+ * Clase principal del servidor para el juego Pac-Man distribuido.
  * 
- * <p>Esta clase se encarga de levantar un {@link ServerSocket} en un puerto
- * determinado (temporalmente configurado en 5000), aceptar una conexión de
- * un cliente y establecer la comunicación inicial a través de flujos de texto.
+ * <p>Esta clase se encarga ÚNICAMENTE de la infraestructura de red:
+ * levantar el servidor, aceptar conexiones y crear hilos para cada cliente.
+ * Toda la lógica de negocio y autenticación está delegada a otras capas.</p>
  * 
- * <p>En esta versión preliminar, el servidor:
+ * <p>Responsabilidades (según SOLID - Single Responsibility):</p>
  * <ul>
- *   <li>Escucha en el puerto especificado.</li>
- *   <li>Acepta una conexión de un cliente.</li>
- *   <li>Recibe un mensaje enviado por el cliente.</li>
- *   <li>Envía una respuesta de confirmación al cliente.</li>
- *   <li>Cierra la conexión de forma controlada.</li>
+ *   <li>Inicializar el ServerSocket</li>
+ *   <li>Aceptar conexiones entrantes</li>
+ *   <li>Crear hilos para manejar clientes</li>
  * </ul>
  * 
- * <p>Más adelante, este servidor deberá evolucionar para:
+ * <p>NO se encarga de:</p>
  * <ul>
- *   <li>Leer la configuración (puerto, base de datos, etc.) desde un archivo de propiedades.</li>
- *   <li>Gestionar múltiples clientes a través de hilos dedicados.</li>
- *   <li>Implementar la lógica del juego Pac-Man en la máquina del servidor.</li>
+ *   <li>❌ Lógica de autenticación (AutenticacionService)</li>
+ *   <li>❌ Acceso a base de datos (UsuarioDAO)</li>
+ *   <li>❌ Comunicación por socket con clientes (ManejadorCliente)</li>
+ *   <li>❌ Coordinación de flujos (AutenticacionController)</li>
  * </ul>
  * 
- * @author Juan Sebastián Bravo Rojas
- * @version 1.0
- * @since 2025-11-06
+ * <p>Arquitectura MVC + Servicios:</p>
+ * <pre>
+ * ServidorPrincipal (Infraestructura)
+ *    → ManejadorCliente (Capa de Red)
+ *       → AutenticacionController (Controlador)
+ *          → AutenticacionService (Servicio/Modelo)
+ *             → UsuarioDAO (Acceso a Datos)
+ * </pre>
+ * 
+ * <p>Cumple con SOLID:</p>
+ * <ul>
+ *   <li><b>S - Single Responsibility:</b> Solo infraestructura de red</li>
+ *   <li><b>O - Open/Closed:</b> Extensible mediante diferentes manejadores</li>
+ * </ul>
+ * 
+ * @author Juan Esteban Ariza Ortiz
+ * @version 3.0
+ * @since 2025-11-10
  */
 public class ServidorPrincipal {
+
+    /** Puerto en el que escucha el servidor */
+    private static final int PUERTO = 5000;
 
     /**
      * Punto de entrada principal del servidor.
      * 
-     * <p>Inicializa un {@link ServerSocket} en el puerto 5000, espera una conexión
-     * entrante de un cliente, establece los flujos de entrada/salida para la
-     * comunicación y cierra la conexión una vez intercambiados los mensajes.
+     * <p>Inicializa un {@link ServerSocket} en el puerto especificado y entra
+     * en un bucle infinito para aceptar conexiones de clientes. Cada cliente
+     * es manejado en un hilo separado para permitir conexiones concurrentes.</p>
      * 
      * @param args argumentos de línea de comandos (no utilizados)
      */
     public static void main(String[] args) {
-        int puerto = 5000; // TODO: este valor debe cargarse desde un archivo .properties
+        System.out.println("Iniciando servidor Pac-Man...");
+        
+        try (ServerSocket serverSocket = new ServerSocket(PUERTO)) {
+            System.out.println("Servidor esperando conexión en el puerto " + PUERTO + "...");
 
-        try (ServerSocket serverSocket = new ServerSocket(puerto)) {
-            System.out.println("Servidor esperando conexión en el puerto " + puerto + "...");
+            while (true) {
+                Socket socketCliente = serverSocket.accept();
+                System.out.println("Cliente conectado desde " + socketCliente.getInetAddress());
+                
+                // Crear un hilo para manejar este cliente
+                Thread hiloCliente = new Thread(new ManejadorCliente(socketCliente));
+                hiloCliente.start();
+            }
 
-            Socket socket = serverSocket.accept();
-            System.out.println("Cliente conectado desde " + socket.getInetAddress());
-
-            BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter salida = new PrintWriter(socket.getOutputStream(), true);
-
-            String mensajeCliente = entrada.readLine();
-            System.out.println("Cliente dice: " + mensajeCliente);
-
-            salida.println("Conexión aceptada por el servidor");
-
-            socket.close();
-            System.out.println("Servidor cerrado correctamente.");
         } catch (IOException e) {
+            System.err.println("Error en el servidor: " + e.getMessage());
             e.printStackTrace();
         }
     }
