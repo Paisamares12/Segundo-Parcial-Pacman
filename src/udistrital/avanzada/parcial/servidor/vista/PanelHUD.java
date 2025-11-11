@@ -12,23 +12,49 @@ import java.util.concurrent.TimeUnit;
  * valores que le provee el controlador/ventana.
  * </p>
  *
+ * Modificado: Juan Ariza
  * @author Paula Martinez
- * @version 1.0
- * @since 2025-11-09
+ * @author Juan Sebastián Bravo Rojas
+ * @version 1.1
+ * @since 2025-11-11
  */
 public class PanelHUD extends JPanel {
 
-    private final JLabel lblPuntaje = new JLabel("Puntaje: 0");
-    private final JLabel lblTiempo = new JLabel("Tiempo: 00:00.000");
+    private final JLabel lblPuntaje = new JLabel("🏆 Puntaje: 0");
+    private final JLabel lblTiempo = new JLabel("⏱️ Tiempo: 00:00.000");
 
     /**
-     * Crea el panel HUD con estilo simple.
+     * Crea el panel HUD con estilo mejorado.
      */
     public PanelHUD() {
-        setLayout(new FlowLayout(FlowLayout.LEFT, 16, 6));
+        setLayout(new FlowLayout(FlowLayout.LEFT, 20, 8));
+        setBackground(new Color(30, 30, 30));
+        
+        // Estilo de las etiquetas
+        Font fuente = new Font("Arial", Font.BOLD, 14);
+        Color colorTexto = new Color(255, 215, 0);
+        
+        lblPuntaje.setFont(fuente);
+        lblPuntaje.setForeground(colorTexto);
+        
+        lblTiempo.setFont(fuente);
+        lblTiempo.setForeground(colorTexto);
+        
         add(lblPuntaje);
-        add(new JSeparator(SwingConstants.VERTICAL));
+        add(crearSeparador());
         add(lblTiempo);
+    }
+    
+    /**
+     * Crea un separador vertical para el HUD.
+     * 
+     * @return separador visual
+     */
+    private JLabel crearSeparador() {
+        JLabel separador = new JLabel(" | ");
+        separador.setForeground(Color.GRAY);
+        separador.setFont(new Font("Arial", Font.BOLD, 14));
+        return separador;
     }
 
     /**
@@ -38,8 +64,8 @@ public class PanelHUD extends JPanel {
      * @param tiempoMs tiempo transcurrido en milisegundos
      */
     public void setValores(int puntaje, long tiempoMs) {
-        lblPuntaje.setText("Puntaje: " + puntaje);
-        lblTiempo.setText("Tiempo: " + formatear(tiempoMs));
+        lblPuntaje.setText("🏆 Puntaje: " + puntaje);
+        lblTiempo.setText("⏱️ Tiempo: " + formatear(tiempoMs));
     }
 
     /**
