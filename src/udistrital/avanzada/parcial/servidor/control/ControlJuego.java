@@ -1,47 +1,46 @@
 package udistrital.avanzada.parcial.servidor.control;
 
 import udistrital.avanzada.parcial.servidor.modelo.*;
-import java.util.Iterator;
 import java.util.List;
+import udistrital.avanzada.parcial.mensajes.SnapshotFactory;
+import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 
 /**
  * Controlador responsable del "motor" del juego en el servidor.
  *
+ * 
+ * 
+ * "MODIFICACION"
  * <p>
- * Ejecuta un game-loop que:
+ * Maneja la lógica del juego incluyendo:
  * <ul>
- *   <li>Mueve a Pac-Man según la dirección actual (recibida desde la red).</li>
- *   <li>Detecta colisiones Pac-Man <-> Fruta y actualiza el puntaje.</li>
- *   <li>Notifica a la capa de interfaz del servidor para refrescar el tablero / HUD.</li>
+ *   <li>Movimiento de Pac-Man según comandos recibidos</li>
+ *   <li>Detección de colisiones con paredes</li>
+ *   <li>Detección de colisiones con frutas y actualización de puntaje</li>
+ *   <li>Notificación a la capa de interfaz para refrescar la vista</li>
  * </ul>
  * </p>
  *
+ * TODO: Se modificó la idea de esta clase, implementación posibles pero es obligatoria?
  * <p>
  * Importante: <b>no</b> realiza operaciones de red ni de persistencia. Las clases
  * encargadas de red (por ejemplo {@code ManejadorCliente}) deben:
  * <ul>
- *   <li>invocar {@link #setDireccion(Direccion)} al recibir comandos del cliente</li>
- *   <li>consultar {@link #getEstadoActual()} periódicamente para construir y enviar snapshots</li>
+ *   <li>invocar {@link #procesarComando(Direccion)} al recibir comandos del cliente</li>
+ *   <li>consultar {@link #getEstadoActual()} para obtener información actualizada</li>
  * </ul>
  * </p>
  * 
+ * Modificada: Juan Ariza
+ * 
  * @author Juan Sebastián Bravo Rojas
- * @version 1.1
+ * @version 1.2
  * @since 2025-11-11
  */
 public class ControlJuego {
 
-    /** Intervalo del game loop en milisegundos. Ajustable a gusto. */
-    private static final long TICK_MS = 100L;
-
     private final EstadoJuego estado;
-    private final ControlInterfazServidor controlInterfaz; // puede ser null si no hay UI servidor
-
-    private Thread hiloJuego;
-    private volatile boolean jugando = false;
-
-    /** Dirección actual del jugador (manejada por la capa de red). */
-    private volatile Direccion direccionActual = null;
+    private final ControlInterfazServidor controlInterfaz;
 
     /**
      * Crea el controlador de juego.
@@ -55,154 +54,132 @@ public class ControlJuego {
     }
 
     /**
-     * Inicia el motor del juego. Si ya está iniciado, no hace nada.
-     */
-    public synchronized void iniciarJuego() {
-        if (jugando) return;
-        jugando = true;
-
-        hiloJuego = new Thread(() -> {
-            long last = System.currentTimeMillis();
-            while (jugando) {
-                long now = System.currentTimeMillis();
-                long elapsed = now - last;
-                if (elapsed >= TICK_MS) {
-                    try {
-                        actualizarTick();
-                    } catch (Throwable t) {
-                        // Nunca permitir que una excepción detenga el motor.
-                        System.err.println("Error en motor de juego: " + t.getMessage());
-                        t.printStackTrace();
-                    }
-                    last = now;
-                } else {
-                    try {
-                        Thread.sleep(Math.max(1, TICK_MS - elapsed));
-                    } catch (InterruptedException ignored) {
-                        // ignorar interrupciones salvo que se vaya a detener explícitamente
-                    }
-                }
-            }
-        }, "MotorJuego-Thread");
-        hiloJuego.setDaemon(true);
-        hiloJuego.start();
-    }
-
-    /**
-     * Detiene el motor de juego de forma ordenada.
-     */
-    public synchronized void detenerJuego() {
-        jugando = false;
-        if (hiloJuego != null) {
-            hiloJuego.interrupt();
-            try {
-                hiloJuego.join(200);
-            } catch (InterruptedException ignored) {
-            }
-        }
-    }
-
-    /**
-     * Actualización por tick (ejecutada en el hilo del motor).
+     * Procesa un comando de movimiento de forma síncrona.
      *
-     * - Mueve Pac-Man según {@link #direccionActual} usando {@link ConstantesJuego#PASO_PIXELES}.
-     * - Evita salirse de los límites usando {@link LimitesTablero}.
-     * - Detecta colisiones con frutas (usa {@link ConstantesJuego#RADIO_COLISION}).
-     * - Marca frutas como comidas y suma puntaje en {@link EstadoJuego}.
-     * - Pide a {@link ControlInterfazServidor} refrescar la vista si está presente.
+     * <p>Este método ejecuta un ciclo completo de actualización:</p>
+     * <ol>
+     *   <li>Intenta mover a Pac-Man en la dirección especificada</li>
+     *   <li>Detecta colisión con paredes (límites del tablero)</li>
+     *   <li>Detecta colisión con frutas</li>
+     *   <li>Actualiza el puntaje si corresponde</li>
+     *   <li>Refresca la interfaz del servidor</li>
+     * </ol>
+     *
+     * @param direccion dirección del movimiento solicitado
+     * @return objeto con el resultado del movimiento (colisiones, frutas comidas, puntos)
      */
-    private synchronized void actualizarTick() {
-        // 1) Mover Pac-Man
-        Pacman pac = estado.getPacman();
-        if (pac != null) {
-            moverPacmanPorTick(pac);
+    public synchronized ResultadoMovimiento procesarComando(Direccion direccion) {
+        boolean chocoConPared = false;
+        int frutasComidasAntes = contarFrutasComidas();
+        int puntajeAntes = estado.getPuntaje();
+
+        // 1) Intentar mover Pac-Man
+        if (direccion != null && direccion != Direccion.NINGUNA) {
+            chocoConPared = intentarMoverPacman(direccion);
         }
 
-        // 2) Detectar colisiones con frutas (y actualizar puntaje)
+        // 2) Detectar colisiones con frutas
         detectarColisionesFrutas();
 
-        // 3) Notificar a la UI del servidor (si existe)
+        // 3) Calcular resultados
+        int frutasComidasDespues = contarFrutasComidas();
+        int frutasComidas = frutasComidasDespues - frutasComidasAntes;
+        int puntosGanados = estado.getPuntaje() - puntajeAntes;
+
+        // 4) Refrescar interfaz del servidor
         if (controlInterfaz != null) {
-            // refresca solo el tablero (la UI puede preguntar puntaje si necesita)
-            controlInterfaz.refrescarTablero();
-            // actualiza HUD (tiempo no es modelado en EstadoJuego en esta versión -> 0)
-            controlInterfaz.actualizarHUD(estado.getPuntaje(), 0L);
+            actualizarVista();
         }
+
+        return new ResultadoMovimiento(chocoConPared, frutasComidas, puntosGanados);
     }
 
     /**
-     * Mueve la posición de Pac-Man según la dirección actual y PASO_PIXELES.
+     * Intenta mover a Pac-Man en la dirección indicada.
      *
-     * @param pac instancia de Pacman cuyo posicion se modificará
+     * <p>Aplica el desplazamiento según {@link ConstantesJuego#PASO_PIXELES}
+     * y verifica si la nueva posición está dentro de los límites. Si está
+     * fuera, NO mueve a Pac-Man y retorna true indicando colisión con pared.</p>
+     *
+     * @param direccion dirección del movimiento
+     * @return true si chocó con una pared, false si el movimiento fue válido
      */
-    private void moverPacmanPorTick(Pacman pac) {
-        if (direccionActual == null) return; // no hay movimiento solicitado
+    private boolean intentarMoverPacman(Direccion direccion) {
+        Pacman pac = estado.getPacman();
+        if (pac == null || pac.getPosicion() == null) {
+            return false;
+        }
 
         Posicion pos = pac.getPosicion();
-        if (pos == null) return;
-
         int paso = ConstantesJuego.PASO_PIXELES;
 
-        // Direcciones en tu modelo usan dx()/dy() (enteros -1/0/1)
-        int dx = direccionActual.dx() * paso;
-        int dy = direccionActual.dy() * paso;
-
+        // Calcular nueva posición
+        int dx = direccion.dx() * paso;
+        int dy = direccion.dy() * paso;
         int nx = pos.getX() + dx;
         int ny = pos.getY() + dy;
 
-        // Respetar límites del tablero
+        // Verificar límites
         LimitesTablero limites = estado.getLimites();
         if (limites != null) {
-            nx = Math.max(limites.getMinX(), Math.min(nx, limites.getMaxX()));
-            ny = Math.max(limites.getMinY(), Math.min(ny, limites.getMaxY()));
+            // Detectar colisión con pared ANTES de mover
+            if (nx < limites.getMinX() || nx > limites.getMaxX() ||
+                ny < limites.getMinY() || ny > limites.getMaxY()) {
+                // Colisión con pared - NO mover
+                System.out.println("¡Colisión con pared! Posición intentada: (" + nx + "," + ny + ")");
+                return true;
+            }
         }
 
+        // Movimiento válido - actualizar posición
         pos.setX(nx);
         pos.setY(ny);
-        // actualizar en el objeto Pacman
-        pac.setPosicion(pos);
+        pac.setDireccion(direccion);
+        return false;
     }
 
     /**
-     * Recorre las frutas y determina si alguna fue comida por Pac-Man.
-     * Cuando una fruta es comida, marca la fruta y acumula puntaje.
+     * Detecta colisiones entre Pac-Man y las frutas, marcándolas como
+     * comidas y acumulando el puntaje correspondiente.
      */
     private void detectarColisionesFrutas() {
         Pacman pac = estado.getPacman();
-        if (pac == null) return;
+        if (pac == null || pac.getPosicion() == null) {
+            return;
+        }
 
         Posicion posPac = pac.getPosicion();
-        if (posPac == null) return;
-
         List<Fruta> frutas = estado.getFrutas();
-        if (frutas == null || frutas.isEmpty()) return;
+        if (frutas == null || frutas.isEmpty()) {
+            return;
+        }
 
-        Iterator<Fruta> it = frutas.iterator();
-        while (it.hasNext()) {
-            Fruta f = it.next();
-            if (f == null) continue;
-            if (f.isComida()) continue;
+        for (Fruta f : frutas) {
+            if (f == null || f.isComida()) {
+                continue;
+            }
 
             Posicion posF = f.getPosicion();
-            if (posF == null) continue;
+            if (posF == null) {
+                continue;
+            }
 
             if (colisiona(posPac, posF)) {
-                // marcar como comida (el modelo soporta comer())
                 f.comer();
-                // sumar puntaje según TipoFruta
                 int puntos = f.getTipo().getPuntaje();
                 estado.sumarPuntos(puntos);
-                System.out.println("Pac-Man comió " + f.getTipo() + " -> +" + puntos + " pts. Total: " + estado.getPuntaje());
+                System.out.println("¡Pac-Man comió " + f.getTipo() + "! +" + puntos + " pts. Total: " + estado.getPuntaje());
             }
         }
     }
 
     /**
-     * Detección simple por proximidad usando {@link ConstantesJuego#RADIO_COLISION}.
+     * Verifica si dos posiciones colisionan según el radio de colisión
+     * definido en {@link ConstantesJuego#RADIO_COLISION}.
      *
-     * @param a posición A (normalmente Pac-Man)
-     * @param b posición B (fruta)
-     * @return true si la distancia euclidiana <= RADIO_COLISION
+     * @param a primera posición (normalmente Pac-Man)
+     * @param b segunda posición (fruta)
+     * @return true si la distancia euclidiana es menor o igual al radio de colisión
      */
     private boolean colisiona(Posicion a, Posicion b) {
         int dx = a.getX() - b.getX();
@@ -213,24 +190,52 @@ public class ControlJuego {
     }
 
     /**
-     * Actualiza la dirección deseada de Pac-Man. Este método es thread-safe
-     * y puede ser invocado desde hilos de red (por ejemplo {@code ManejadorCliente}).
+     * Cuenta cuántas frutas han sido comidas en el estado actual.
      *
-     * @param direccion nueva dirección solicitada (puede ser null para detener movimiento)
+     * @return cantidad de frutas comidas
      */
-    public synchronized void setDireccion(Direccion direccion) {
-        this.direccionActual = direccion;
+    private int contarFrutasComidas() {
+        return (int) estado.getFrutas().stream()
+                .filter(Fruta::isComida)
+                .count();
     }
 
     /**
-     * Devuelve el estado de juego actual. La referencia es la del modelo; si
-     * necesitas enviar snapshots en red, conviene construir un DTO inmutable
-     * desde esta información (lo hace la capa de red).
+     * Actualiza la vista del servidor con el estado más reciente.
+     */
+    private void actualizarVista() {
+        SnapshotTablero snapshot = SnapshotFactory.fromEstado(estado);
+        controlInterfaz.cargarSnapshot(snapshot);
+        controlInterfaz.actualizarHUD(estado.getPuntaje(), 0L);
+    }
+
+    /**
+     * Devuelve el estado de juego actual.
      *
      * @return instancia de {@link EstadoJuego}
      */
     public synchronized EstadoJuego getEstadoActual() {
         return estado;
+    }
+
+    /**
+     * Verifica si el juego ha terminado (todas las frutas comidas).
+     *
+     * @return true si todas las frutas fueron comidas
+     */
+    public synchronized boolean juegoTerminado() {
+        return estado.todasLasFrutasComidas();
+    }
+
+    /**
+     * Obtiene la cantidad de frutas que aún no han sido comidas.
+     *
+     * @return cantidad de frutas restantes
+     */
+    public synchronized int getFrutasRestantes() {
+        return (int) estado.getFrutas().stream()
+                .filter(f -> !f.isComida())
+                .count();
     }
 }
 
