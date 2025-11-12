@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package udistrital.avanzada.parcial.cliente.vista;
 
 import udistrital.avanzada.parcial.mensajes.RespuestaFinal;
@@ -12,11 +8,12 @@ import java.awt.*;
 /**
  * Diálogo que se muestra al finalizar el juego con los resultados.
  *
- * <p>Muestra el puntaje final, tiempo y nombre del jugador, con opciones
- * para ver el ranking o salir.</p>
+ * <p>
+ * Muestra el puntaje final, tiempo y nombre del jugador, con opciones para ver
+ * el ranking o salir.</p>
  *
  * @author Juan Estevan Ariza Ortiz
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-11
  */
 public class DialogoFinJuego extends JDialog {
@@ -33,9 +30,9 @@ public class DialogoFinJuego extends JDialog {
     public DialogoFinJuego(JFrame parent, RespuestaFinal respuestaFinal) {
         super(parent, "¡Juego Terminado!", true);
         this.respuestaFinal = respuestaFinal;
-        
+
         inicializarComponentes();
-        
+
         setSize(450, 350);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -47,7 +44,7 @@ public class DialogoFinJuego extends JDialog {
      */
     private void inicializarComponentes() {
         setLayout(new BorderLayout(10, 10));
-        
+
         // Panel principal con gradiente
         JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
         panelPrincipal.setBackground(new Color(240, 248, 255));

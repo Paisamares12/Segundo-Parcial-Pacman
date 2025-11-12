@@ -13,7 +13,8 @@ import java.awt.image.BufferedImage;
  * Renderiza los límites del tablero, la posición de Pac-Man y las frutas
  * utilizando imágenes cargadas desde los recursos del proyecto. Este panel no
  * toma decisiones de movimiento ni de colisión; únicamente refleja el estado
- * entregado por {@link udistrital.avanzada.parcial.servidor.modelo.EstadoJuego}.
+ * entregado por
+ * {@link udistrital.avanzada.parcial.servidor.modelo.EstadoJuego}.
  * </p>
  *
  * <h3>Convenciones de dibujo</h3>
@@ -23,37 +24,51 @@ import java.awt.image.BufferedImage;
  * <li>Frutas: imagen de comida (no se dibujan si están comidas)</li>
  * </ul>
  *
- * <p>Las imágenes se cargan mediante {@link CargadorRecursos} y se escalan
+ * <p>
+ * Las imágenes se cargan mediante {@link CargadorRecursos} y se escalan
  * apropiadamente para el tamaño del panel.</p>
  *
- * Modificado: Juan Ariza
- * 
+ * Modificado: Juan Ariza y Juan Sebastián Bravo Rojas
+ *
  * @author Paula Martinez
- * @author Juan Sebastián Bravo Rojas
  * @version 2.0
  * @since 2025-11-11
  */
 public class PanelJuegoServidor extends JPanel {
 
-    /** Último snapshot enviado por el servidor (datos compactos para pintar) */
+    /**
+     * Último snapshot enviado por el servidor (datos compactos para pintar)
+     */
     private SnapshotTablero snapshot;
 
-    /** Cargador de recursos gráficos */
+    /**
+     * Cargador de recursos gráficos
+     */
     private final CargadorRecursos recursos;
 
-    /** Tamaño para renderizar Pac-Man (en píxeles) */
+    /**
+     * Tamaño para renderizar Pac-Man (en píxeles)
+     */
     private static final int TAMANIO_PACMAN = 20;
 
-    /** Tamaño para renderizar frutas (en píxeles) */
+    /**
+     * Tamaño para renderizar frutas (en píxeles)
+     */
     private static final int TAMANIO_FRUTA = 16;
 
-    /** Tamaño de los bloques de pared (en píxeles) */
+    /**
+     * Tamaño de los bloques de pared (en píxeles)
+     */
     private static final int TAMANIO_PARED = 20;
 
-    /** Color de fondo del tablero */
+    /**
+     * Color de fondo del tablero
+     */
     private static final Color COLOR_FONDO = new Color(0, 0, 0);
 
-    /** Color del texto */
+    /**
+     * Color del texto
+     */
     private static final Color COLOR_TEXTO = new Color(255, 255, 0);
 
     /**

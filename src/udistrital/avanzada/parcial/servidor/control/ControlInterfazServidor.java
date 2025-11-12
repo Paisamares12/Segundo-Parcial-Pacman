@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
  * </p>
  *
  * @author Paula Martinez
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-09
  */
 public class ControlInterfazServidor {
@@ -89,17 +89,5 @@ public class ControlInterfazServidor {
      */
     public void refrescarTablero() {
         SwingUtilities.invokeLater(vista::refrescar);
-    }
-
-    /**
-     * Registra un mensaje informativo en la interfaz (si tu
-     * {@link MarcoServidor} implementa un log visual). En la versión base, no
-     * hace nada; mantenlo para futuro crecimiento sin romper firmas.
-     *
-     * @param mensaje texto a mostrar
-     */
-    public void log(String mensaje) {
-        // Si agregas un área de log en MarcoServidor, llama aquí a vista.log(mensaje).
-        // SwingUtilities.invokeLater(() -> vista.log(mensaje));
     }
 }

@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
  * </p>
  *
  * @author Paula Martinez
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-09
  */
 public class ControlInterfazCliente {

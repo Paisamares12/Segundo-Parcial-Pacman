@@ -17,7 +17,7 @@ import java.io.File;
  * del patrón MVC, donde toda interacción visual se maneja exclusivamente en esta capa.</p>
  * 
  * @author Juan Sebastián Bravo Rojas
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-11
  */
 public class VentanaConfiguracionCliente {
