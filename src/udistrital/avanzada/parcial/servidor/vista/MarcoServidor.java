@@ -32,19 +32,9 @@ import java.awt.*;
  */
 public class MarcoServidor extends JFrame {
 
-    /**
-     * Panel responsable de dibujar el tablero.
-     */
     private final PanelJuegoServidor panelJuego = new PanelJuegoServidor();
-
-    /**
-     * Panel HUD con puntaje y tiempo.
-     */
     private final PanelHUD panelHUD = new PanelHUD();
 
-    /**
-     * Crea y arma la ventana del servidor.
-     */
     public MarcoServidor() {
         super("🎮 Servidor Pac-Man - Tablero de Juego");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,37 +48,29 @@ public class MarcoServidor extends JFrame {
         setResizable(false);
     }
 
-    /**
-     * Muestra la ventana.
-     */
     public void mostrar() {
         setVisible(true);
     }
 
-    /**
-     * Carga el snapshot más reciente para que el panel de juego lo pinte.
-     *
-     * @param snapshot estado compacto del tablero
-     */
     public void cargarSnapshot(SnapshotTablero snapshot) {
         panelJuego.setSnapshot(snapshot);
     }
 
-    /**
-     * Actualiza los textos del HUD (puntaje y tiempo).
-     *
-     * @param puntaje puntaje acumulado
-     * @param tiempoMs tiempo transcurrido en milisegundos
-     */
     public void actualizarHUD(int puntaje, long tiempoMs) {
         panelHUD.setValores(puntaje, tiempoMs);
     }
 
-    /**
-     * Solicita repintar el tablero y actualizar el HUD en pantalla.
-     */
     public void refrescar() {
         panelJuego.repaint();
         panelHUD.repaint();
+    }
+    
+    /**
+     * NUEVO: Obtiene el panel de juego para capturar frames.
+     *
+     * @return panel de juego del servidor
+     */
+    public PanelJuegoServidor getPanelJuego() {
+        return panelJuego;
     }
 }

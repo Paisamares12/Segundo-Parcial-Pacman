@@ -3,7 +3,60 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/paisa/OneDrive/Desktop/Cosas%20Importantes%20Paula/Programación%20Avanzada/Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/app/ServidorPrincipal.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/ClienteEstado.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/UsuarioVO.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/data/DatosConexionUsuarios.properties</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/control/ControlInterfazCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/control/ControlCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/app/ClientePrincipal.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/conexion/ConexionBD.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/JugadorVO.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/SolicitudAutenticacion.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/ComandoMovimiento.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/RespuestaAutenticacion.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/control/ConfiguracionCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlInterfazServidor.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/ControlJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/dao/IUsuarioDAO.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/IAutenticacionService.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/AutenticacionService.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/AutenticacionController.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/red/IManejadorCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/red/ManejadorCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/api/EventosCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/api/EstadoClienteObservable.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/VentanaInicializacionBD.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/PanelJuegoServidor.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/PanelHUD.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/MarcoServidor.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioTiempo.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/ConstantesJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/SnapshotTablero.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/SnapshotFactory.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/PanelControles.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/modelo/EstadoJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/RespuestaMovimiento.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/ResultadoMovimiento.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/control/InicializadorJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/Imagenes/Comida.png</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/Imagenes/PacmanAbajo.png</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/Imagenes/PacmanArriba.png</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/Imagenes/PacmanDerecha.png</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/Imagenes/PacmanIzquierda.png</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/Imagenes/Pared.png</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/vista/CargadorRecursos.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/MarcoCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/mensajes/RespuestaFinal.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/modelo/ResultadoPartida.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/persistencia/RankingDAO.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/DialogoFinJuego.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/VentanaRanking.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/VentanaConfiguracionCliente.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/persistencia/InicializadorBD.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/servidor/servicios/ServicioStreaming.java</file>
+            <file>file:/C:/Users/Pc/Documents/NetBeansProjects/Segundo-Parcial-Pacman/src/udistrital/avanzada/parcial/cliente/vista/PanelVideo.java</file>
         </group>
     </open-files>
 </project-private>
