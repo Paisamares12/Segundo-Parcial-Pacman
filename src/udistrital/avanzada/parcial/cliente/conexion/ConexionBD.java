@@ -64,7 +64,7 @@ public class ConexionBD {
 
             // Primero, conectar sin especificar la base de datos para crearla si no existe
             Connection connTemp = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3307/", USUARIO, PASSWORD);
+                    "jdbc:mysql://localhost:3306/", USUARIO, PASSWORD);
 
             Statement stmt = connTemp.createStatement();
             // Crear la base de datos si no existe
