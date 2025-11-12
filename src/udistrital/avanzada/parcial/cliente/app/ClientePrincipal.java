@@ -19,41 +19,17 @@ import java.io.IOException;
  * coordinar la carga de la configuración, la solicitud de credenciales y la
  * inicialización del controlador principal que gestionará la comunicación con
  * el servidor.</p>
- *
- * <p>
- * No contiene ningún componente gráfico directamente, siguiendo el principio de
- * separación de responsabilidades del patrón MVC. Toda interacción con el
- * usuario se delega a la clase {@link VentanaConfiguracionCliente}.</p>
- *
- * <p>
- * Flujo de ejecución:</p>
- * <ol>
- * <li>Solicita el archivo de configuración a través de la vista.</li>
- * <li>Carga el host y puerto desde el archivo .properties.</li>
- * <li>Solicita las credenciales del usuario.</li>
- * <li>Inicializa el estado del cliente y el controlador.</li>
- * <li>Conecta con el servidor para autenticación.</li>
- * </ol>
- *
+ * 
+ * @author Juan Estevan Ariza Ortiz
  * @author Juan Sebastián Bravo Rojas
- * @version 3.0
+ * @version 4.0
  * @since 2025-11-11
  */
 public class ClientePrincipal {
 
-    /**
-     * Punto de entrada principal del cliente.
-     *
-     * <p>
-     * Coordina la selección del archivo de configuración, la solicitud de
-     * credenciales y la conexión inicial al servidor. No realiza operaciones
-     * visuales directamente.</p>
-     *
-     * @param args argumentos de línea de comandos (no utilizados)
-     */
     public static void main(String[] args) {
         try {
-            // Instanciar vista de configuración
+            // Vista de configuración
             VentanaConfiguracionCliente vista = new VentanaConfiguracionCliente();
 
             // Seleccionar archivo de configuración
@@ -63,14 +39,14 @@ public class ClientePrincipal {
                 return;
             }
 
-            // Cargar configuración desde el archivo .properties
+            // Cargar configuración
             ConfiguracionCliente config = new ConfiguracionCliente(archivoConfig);
             String host = config.getHost();
             int puerto = config.getPuerto();
 
             System.out.println("Configuración cargada - Host: " + host + ", Puerto: " + puerto);
 
-            // Solicitar credenciales al usuario
+            // Solicitar credenciales
             String usuario = vista.solicitarUsuario();
             if (usuario == null || usuario.trim().isEmpty()) {
                 System.out.println("Usuario no proporcionado. Saliendo...");
@@ -83,35 +59,26 @@ public class ClientePrincipal {
                 return;
             }
 
-            // Crear estado y controlador del cliente
+            // Crear estado y controlador
             ClienteEstado estado = new ClienteEstado();
             ControlCliente controlCliente = new ControlCliente(estado);
 
-            // === UI del juego ===
+            // Crear vista del juego
             MarcoCliente vistaJuego = new MarcoCliente();
-            // La vista ya tiene estos dos métodos en tu código:
-            vistaJuego.setEstado(estado);          // se suscribe al estado (PropertyChangeListener)
-            vistaJuego.setControl(controlCliente); // botones del panel delegan al control
+            vistaJuego.setEstado(estado);
+            vistaJuego.setControl(controlCliente);
 
             SwingUtilities.invokeLater(() -> {
                 vistaJuego.mostrar();
-                // instala las teclas (↑ ↓ ← → y WASD) sobre el panel de juego
                 new ControlInterfazCliente(controlCliente)
                         .instalarKeyBindings(vistaJuego.getComponenteJuego());
-            });
-
-            // Suscribirse a eventos del estado para mostrar logs en consola
-            estado.addPropertyChangeListener(evt -> {
-                if (ClienteEstado.PROP_LOG.equals(evt.getPropertyName())) {
-                    System.out.println("[LOG] " + evt.getNewValue());
-                }
             });
 
             // Conectar al servidor
             System.out.println("Conectando al servidor...");
             controlCliente.conectar(host, puerto, usuario, contraseña);
 
-            // Mantener la ejecución del cliente
+            // Mantener ejecución
             System.out.println("Cliente en ejecución. Presione Ctrl+C para salir.");
             Thread.currentThread().join();
 

@@ -8,6 +8,7 @@ import udistrital.avanzada.parcial.mensajes.SnapshotFactory;
 import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 import udistrital.avanzada.parcial.servidor.modelo.*;
 import udistrital.avanzada.parcial.servidor.servicios.ServicioFrutas;
+import udistrital.avanzada.parcial.servidor.servicios.ServicioTiempo;
 import udistrital.avanzada.parcial.servidor.vista.MarcoServidor;
 
 /**
@@ -18,6 +19,7 @@ import udistrital.avanzada.parcial.servidor.vista.MarcoServidor;
  *   <li>Crea el estado del juego con límites del tablero</li>
  *   <li>Posiciona a Pac-Man en el centro del tablero</li>
  *   <li>Coloca 4 frutas en posiciones aleatorias</li>
+ *   <li>Inicializa el servicio de tiempo para cronometrar la partida</li>
  *   <li>Inicializa la ventana de visualización del servidor</li>
  *   <li>Crea los controladores necesarios</li>
  * </ul>
@@ -29,7 +31,7 @@ import udistrital.avanzada.parcial.servidor.vista.MarcoServidor;
  * </ul>
  *
  * @author Juan Estevan Ariza Ortiz
- * @version 1.0
+ * @version 1.1
  * @since 2025-11-11
  */
 public class InicializadorJuego {
@@ -60,26 +62,31 @@ public class InicializadorJuego {
         servicioFrutas.colocarCuatroFrutasUnicas(estado);
         System.out.println("4 frutas colocadas en posiciones aleatorias");
 
-        // 4. Crear vista del servidor
+        // 4. Crear y iniciar servicio de tiempo
+        ServicioTiempo servicioTiempo = new ServicioTiempo();
+        servicioTiempo.iniciar();
+        System.out.println("Cronómetro iniciado");
+
+        // 5. Crear vista del servidor
         MarcoServidor vista = new MarcoServidor();
 
-        // 5. Crear controlador de interfaz
+        // 6. Crear controlador de interfaz
         ControlInterfazServidor controlInterfaz = new ControlInterfazServidor(vista);
 
-        // 6. Crear controlador de juego
+        // 7. Crear controlador de juego
         ControlJuego controlJuego = new ControlJuego(estado, controlInterfaz);
 
-        // 7. Mostrar vista
+        // 8. Mostrar vista
         controlInterfaz.iniciar();
 
-        // 8. Cargar snapshot inicial en la vista
+        // 9. Cargar snapshot inicial en la vista
         SnapshotTablero snapshotInicial = SnapshotFactory.fromEstado(estado);
         controlInterfaz.cargarSnapshot(snapshotInicial);
         controlInterfaz.actualizarHUD(0, 0L);
 
         System.out.println("Sistema de juego inicializado correctamente");
 
-        return new ComponentesJuego(estado, vista, controlInterfaz, controlJuego);
+        return new ComponentesJuego(estado, vista, controlInterfaz, controlJuego, servicioTiempo);
     }
 
     /**
@@ -92,19 +99,23 @@ public class InicializadorJuego {
         private final MarcoServidor vista;
         private final ControlInterfazServidor controlInterfaz;
         private final ControlJuego controlJuego;
+        private final ServicioTiempo servicioTiempo;
 
         public ComponentesJuego(EstadoJuego estado, MarcoServidor vista,
                                 ControlInterfazServidor controlInterfaz,
-                                ControlJuego controlJuego) {
+                                ControlJuego controlJuego,
+                                ServicioTiempo servicioTiempo) {
             this.estado = estado;
             this.vista = vista;
             this.controlInterfaz = controlInterfaz;
             this.controlJuego = controlJuego;
+            this.servicioTiempo = servicioTiempo;
         }
 
         public EstadoJuego getEstado() { return estado; }
         public MarcoServidor getVista() { return vista; }
         public ControlInterfazServidor getControlInterfaz() { return controlInterfaz; }
         public ControlJuego getControlJuego() { return controlJuego; }
+        public ServicioTiempo getServicioTiempo() { return servicioTiempo; }
     }
 }
