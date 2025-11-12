@@ -17,12 +17,13 @@ import java.util.List;
 /**
  * Ventana que muestra el ranking de todos los jugadores.
  *
- * <p>Presenta una tabla con todos los resultados ordenados por ranking
- * (puntaje/tiempo). Incluye información de posición, nombre, puntaje,
- * tiempo, frutas y fecha.</p>
+ * <p>
+ * Presenta una tabla con todos los resultados ordenados por ranking
+ * (puntaje/tiempo). Incluye información de posición, nombre, puntaje, tiempo,
+ * frutas y fecha.</p>
  *
  * @author Juan Estevan Ariza Ortiz
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-11
  */
 public class VentanaRanking extends JFrame {
@@ -37,10 +38,10 @@ public class VentanaRanking extends JFrame {
     public VentanaRanking() {
         super("🏆 Ranking de Jugadores - Pac-Man");
         this.rankingDAO = new RankingDAO();
-        
+
         inicializarComponentes();
         cargarDatos();
-        
+
         setSize(900, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -57,12 +58,12 @@ public class VentanaRanking extends JFrame {
         JPanel panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(70, 130, 180));
         panelTitulo.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
-        
+
         JLabel lblTitulo = new JLabel("🏆 RANKING DE JUGADORES 🏆");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         lblTitulo.setForeground(Color.WHITE);
         panelTitulo.add(lblTitulo);
-        
+
         add(panelTitulo, BorderLayout.NORTH);
 
         // Crear tabla
@@ -73,7 +74,7 @@ public class VentanaRanking extends JFrame {
                 return false; // Tabla no editable
             }
         };
-        
+
         tablaRanking = new JTable(modeloTabla);
         tablaRanking.setFont(new Font("Monospaced", Font.PLAIN, 12));
         tablaRanking.setRowHeight(25);
@@ -81,7 +82,7 @@ public class VentanaRanking extends JFrame {
         tablaRanking.getTableHeader().setFont(new Font("Arial", Font.BOLD, 13));
         tablaRanking.getTableHeader().setBackground(new Color(100, 149, 237));
         tablaRanking.getTableHeader().setForeground(Color.WHITE);
-        
+
         // Configurar anchos de columnas
         tablaRanking.getColumnModel().getColumn(0).setPreferredWidth(40);  // #
         tablaRanking.getColumnModel().getColumn(1).setPreferredWidth(120); // Jugador
@@ -106,7 +107,7 @@ public class VentanaRanking extends JFrame {
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                
+
                 if (!isSelected) {
                     if (row == 0) {
                         c.setBackground(new Color(255, 215, 0, 100)); // Oro
@@ -122,14 +123,14 @@ public class VentanaRanking extends JFrame {
                         c.setFont(c.getFont().deriveFont(Font.PLAIN));
                     }
                 }
-                
+
                 // Centrar columnas específicas
                 if (column == 0 || column == 2 || column == 3 || column == 4 || column == 6) {
                     ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
                 } else {
                     ((JLabel) c).setHorizontalAlignment(SwingConstants.LEFT);
                 }
-                
+
                 return c;
             }
         });
@@ -141,7 +142,7 @@ public class VentanaRanking extends JFrame {
         // Panel inferior con botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         panelBotones.setBackground(new Color(240, 248, 255));
-        
+
         JButton btnActualizar = new JButton("🔄 Actualizar");
         btnActualizar.setFont(new Font("Arial", Font.BOLD, 14));
         btnActualizar.setBackground(new Color(70, 130, 180));
@@ -149,7 +150,7 @@ public class VentanaRanking extends JFrame {
         btnActualizar.setFocusPainted(false);
         btnActualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnActualizar.addActionListener(e -> cargarDatos());
-        
+
         JButton btnCerrar = new JButton("❌ Cerrar");
         btnCerrar.setFont(new Font("Arial", Font.BOLD, 14));
         btnCerrar.setBackground(new Color(220, 20, 60));
@@ -157,10 +158,10 @@ public class VentanaRanking extends JFrame {
         btnCerrar.setFocusPainted(false);
         btnCerrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCerrar.addActionListener(e -> dispose());
-        
+
         panelBotones.add(btnActualizar);
         panelBotones.add(btnCerrar);
-        
+
         add(panelBotones, BorderLayout.SOUTH);
     }
 
@@ -170,10 +171,10 @@ public class VentanaRanking extends JFrame {
     private void cargarDatos() {
         // Limpiar tabla
         modeloTabla.setRowCount(0);
-        
+
         try {
             List<ResultadoPartida> resultados = rankingDAO.leerTodos();
-            
+
             if (resultados.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         "No hay resultados registrados aún.",
@@ -181,7 +182,7 @@ public class VentanaRanking extends JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            
+
             // Agregar filas
             int posicion = 1;
             for (ResultadoPartida resultado : resultados) {
@@ -196,7 +197,7 @@ public class VentanaRanking extends JFrame {
                 };
                 modeloTabla.addRow(fila);
             }
-            
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this,
                     "Error al cargar el ranking: " + e.getMessage(),

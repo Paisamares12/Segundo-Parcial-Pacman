@@ -10,17 +10,20 @@ import java.net.Socket;
 /**
  * Clase principal del servidor para el juego Pac-Man distribuido.
  *
- * <p>Esta clase representa el punto de entrada del servidor. Su responsabilidad
- * principal es levantar la infraestructura de red, aceptar conexiones de clientes
- * y delegar la atención de cada cliente a un hilo independiente mediante la clase
- * {@link ManejadorCliente}.</p>
+ * <p>
+ * Esta clase representa el punto de entrada del servidor. Su responsabilidad
+ * principal es levantar la infraestructura de red, aceptar conexiones de
+ * clientes y delegar la atención de cada cliente a un hilo independiente
+ * mediante la clase {@link ManejadorCliente}.</p>
  *
- * <p>Antes de iniciar el servicio de red, se ejecuta el proceso de inicialización
- * de la base de datos mediante la vista {@link VentanaInicializacionBD}, la cual
- * permite al usuario cargar los datos de jugadores desde un archivo .properties
- * hacia la base de datos MySQL.</p>
+ * <p>
+ * Antes de iniciar el servicio de red, se ejecuta el proceso de inicialización
+ * de la base de datos mediante la vista {@link VentanaInicializacionBD}, la
+ * cual permite al usuario cargar los datos de jugadores desde un archivo
+ * .properties hacia la base de datos MySQL.</p>
  *
- * <p><b>Arquitectura MVC + Servicios:</b></p>
+ * <p>
+ * <b>Arquitectura MVC + Servicios:</b></p>
  * <pre>
  * ServidorPrincipal (Infraestructura)
  *    → VentanaInicializacionBD (Vista)
@@ -32,10 +35,13 @@ import java.net.Socket;
  *             → UsuarioDAO (Acceso a Datos)
  * </pre>
  *
- * <p><b>Cumple con principios SOLID:</b></p>
+ * <p>
+ * <b>Cumple con principios SOLID:</b></p>
  * <ul>
- *   <li><b>S - Single Responsibility:</b> Solo maneja infraestructura y flujo de red.</li>
- *   <li><b>D - Dependency Inversion:</b> Depende de abstracciones (controladores), no implementaciones directas.</li>
+ * <li><b>S - Single Responsibility:</b> Solo maneja infraestructura y flujo de
+ * red.</li>
+ * <li><b>D - Dependency Inversion:</b> Depende de abstracciones
+ * (controladores), no implementaciones directas.</li>
  * </ul>
  *
  * @author Juan Sebastián Bravo Rojas
@@ -44,18 +50,23 @@ import java.net.Socket;
  */
 public class ServidorPrincipal {
 
-    /** Puerto TCP en el que escuchará el servidor */
+    /**
+     * Puerto TCP en el que escuchará el servidor
+     */
     private static final int PUERTO = 5000;
 
     /**
      * Punto de entrada principal del servidor Pac-Man.
      *
-     * <p>Flujo general:</p>
+     * <p>
+     * Flujo general:</p>
      * <ol>
-     *   <li>Inicializa la base de datos mediante la vista {@code VentanaInicializacionBD}.</li>
-     *   <li>Levanta un {@link ServerSocket} en el puerto 5000.</li>
-     *   <li>Acepta conexiones entrantes de múltiples clientes.</li>
-     *   <li>Para cada cliente, lanza un hilo {@link ManejadorCliente} independiente.</li>
+     * <li>Inicializa la base de datos mediante la vista
+     * {@code VentanaInicializacionBD}.</li>
+     * <li>Levanta un {@link ServerSocket} en el puerto 5000.</li>
+     * <li>Acepta conexiones entrantes de múltiples clientes.</li>
+     * <li>Para cada cliente, lanza un hilo {@link ManejadorCliente}
+     * independiente.</li>
      * </ol>
      *
      * @param args argumentos de línea de comandos (no utilizados)

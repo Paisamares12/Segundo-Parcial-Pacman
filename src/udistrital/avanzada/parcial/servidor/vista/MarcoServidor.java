@@ -23,12 +23,11 @@ import java.awt.*;
  * <li>Llamar a {@link #actualizarHUD(int, long)} y {@link #refrescar()} tras
  * cada cambio.</li>
  * </ol>
- * 
- * Modificado: Juan Ariza
+ *
+ * Modificado: Juan Ariza y Juan Sebastián Bravo Rojas
  *
  * @author Paula Martinez
- * @author Juan Sebastián Bravo Rojas
- * @version 1.1
+ * @version 4.0
  * @since 2025-11-11
  */
 public class MarcoServidor extends JFrame {
