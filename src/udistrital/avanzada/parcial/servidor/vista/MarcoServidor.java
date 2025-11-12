@@ -23,10 +23,13 @@ import java.awt.*;
  * <li>Llamar a {@link #actualizarHUD(int, long)} y {@link #refrescar()} tras
  * cada cambio.</li>
  * </ol>
+ * 
+ * Modificado: Juan Ariza
  *
  * @author Paula Martinez
- * @version 1.0
- * @since 2025-11-10
+ * @author Juan Sebastián Bravo Rojas
+ * @version 1.1
+ * @since 2025-11-11
  */
 public class MarcoServidor extends JFrame {
 
@@ -44,15 +47,16 @@ public class MarcoServidor extends JFrame {
      * Crea y arma la ventana del servidor.
      */
     public MarcoServidor() {
-        super("Servidor Pac-Man");
+        super("🎮 Servidor Pac-Man - Tablero de Juego");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(8, 8));
 
         add(panelJuego, BorderLayout.CENTER);
         add(panelHUD, BorderLayout.SOUTH);
 
-        setSize(720, 520);
+        setSize(750, 570);
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

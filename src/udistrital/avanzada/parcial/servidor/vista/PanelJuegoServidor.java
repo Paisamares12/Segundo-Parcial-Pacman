@@ -4,56 +4,79 @@ import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Panel de dibujo del tablero del juego en el lado servidor.
  *
  * <p>
- * Renderiza los límites del tablero, la posición de Pac-Man y las frutas. Este
- * panel no toma decisiones de movimiento ni de colisión; únicamente refleja el
- * estado entregado por {@link EstadoJuego}.
+ * Renderiza los límites del tablero, la posición de Pac-Man y las frutas
+ * utilizando imágenes cargadas desde los recursos del proyecto. Este panel no
+ * toma decisiones de movimiento ni de colisión; únicamente refleja el estado
+ * entregado por {@link udistrital.avanzada.parcial.servidor.modelo.EstadoJuego}.
  * </p>
  *
  * <h3>Convenciones de dibujo</h3>
  * <ul>
- * <li>Límites: rectángulo.</li>
- * <li>Pac-Man: círculo relleno.</li>
- * <li>Frutas: cuadrados (no se dibujan si están comidas).</li>
+ * <li>Límites: imágenes de pared repetidas formando el borde</li>
+ * <li>Pac-Man: imagen correspondiente a su dirección actual</li>
+ * <li>Frutas: imagen de comida (no se dibujan si están comidas)</li>
  * </ul>
  *
+ * <p>Las imágenes se cargan mediante {@link CargadorRecursos} y se escalan
+ * apropiadamente para el tamaño del panel.</p>
+ *
+ * Modificado: Juan Ariza
+ * 
  * @author Paula Martinez
- * @version 1.0
- * @since 2025-11-09
+ * @author Juan Sebastián Bravo Rojas
+ * @version 2.0
+ * @since 2025-11-11
  */
 public class PanelJuegoServidor extends JPanel {
 
-    /**
-     * Último snapshot enviado por el servidor (datos compactos para pintar).
-     */
+    /** Último snapshot enviado por el servidor (datos compactos para pintar) */
     private SnapshotTablero snapshot;
 
-    /**
-     * Color del Pac-Man.
-     */
-    private static final Color COLOR_PACMAN = new Color(255, 215, 0);
+    /** Cargador de recursos gráficos */
+    private final CargadorRecursos recursos;
+
+    /** Tamaño para renderizar Pac-Man (en píxeles) */
+    private static final int TAMANIO_PACMAN = 20;
+
+    /** Tamaño para renderizar frutas (en píxeles) */
+    private static final int TAMANIO_FRUTA = 16;
+
+    /** Tamaño de los bloques de pared (en píxeles) */
+    private static final int TAMANIO_PARED = 20;
+
+    /** Color de fondo del tablero */
+    private static final Color COLOR_FONDO = new Color(0, 0, 0);
+
+    /** Color del texto */
+    private static final Color COLOR_TEXTO = new Color(255, 255, 0);
 
     /**
-     * Color de frutas.
-     */
-    private static final Color COLOR_FRUTA = new Color(200, 0, 0);
-
-    /**
-     * Trazo para bordes.
-     */
-    private static final Stroke STROKE_BORDE = new BasicStroke(2f);
-
-    /**
-     * Crea el panel con un tamaño preferido.
+     * Crea el panel con un tamaño preferido y carga los recursos gráficos.
      */
     public PanelJuegoServidor() {
         setPreferredSize(new Dimension(700, 500));
-        setBackground(Color.WHITE);
+        setBackground(COLOR_FONDO);
         setDoubleBuffered(true);
+
+        // Obtener el cargador de recursos
+        recursos = CargadorRecursos.getInstancia();
+
+        // Intentar cargar recursos
+        try {
+            if (!recursos.recursosDisponibles()) {
+                recursos.cargarRecursos();
+            }
+        } catch (Exception e) {
+            System.err.println("⚠ Advertencia: No se pudieron cargar los recursos gráficos");
+            System.err.println("  Se usarán formas geométricas simples como respaldo");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -69,58 +92,167 @@ public class PanelJuegoServidor extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if (snapshot == null) {
-            g.setColor(Color.GRAY);
-            g.drawString("Esperando snapshot del juego...", getWidth() / 3, getHeight() / 2);
+            dibujarMensajeEspera(g);
             return;
         }
 
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-        // Dibujar límites
-        g2.setColor(Color.DARK_GRAY);
-        int minX = snapshot.getLimiteMinX();
-        int minY = snapshot.getLimiteMinY();
-        int ancho = snapshot.getLimiteMaxX() - snapshot.getLimiteMinX();
-        int alto = snapshot.getLimiteMaxY() - snapshot.getLimiteMinY();
-        g2.drawRect(minX, minY, ancho, alto);
+        // 1. Dibujar bordes del tablero con imágenes de pared
+        dibujarBordes(g2);
 
-        // Dibujar Pac-Man
-        g2.setColor(Color.YELLOW);
-        int px = snapshot.getPacmanX();
-        int py = snapshot.getPacmanY();
-        g2.fillOval(px - 5, py - 5, 10, 10);
+        // 2. Dibujar frutas
+        dibujarFrutas(g2);
 
-        // Dibujar frutas
-        g2.setColor(Color.RED);
-        for (int i = 0; i < snapshot.getNumFrutas(); i++) {
-            if (snapshot.isFrutaComida(i)) {
-                continue;
-            }
-            int fx = snapshot.getFrutaX(i);
-            int fy = snapshot.getFrutaY(i);
-            g2.fillRect(fx - 4, fy - 4, 8, 8);
-        }
+        // 3. Dibujar Pac-Man (encima de todo)
+        dibujarPacman(g2);
 
-        // Dibujar puntaje opcional
-        g2.setColor(Color.BLACK);
-        g2.drawString("Puntaje: " + snapshot.getPuntaje(), minX + 8, minY + 16);
+        // 4. Dibujar información adicional
+        dibujarInfo(g2);
     }
 
     /**
-     * Dibuja un texto centrado cuando no hay estado disponible.
+     * Dibuja los bordes del tablero usando la imagen de pared.
      *
-     * @param g2 contexto gráfico
-     * @param msg mensaje a pintar
+     * @param g2 contexto gráfico 2D
      */
-    private void dibujarMensaje(Graphics2D g2, String msg) {
-        g2.setColor(Color.GRAY);
-        FontMetrics fm = g2.getFontMetrics();
+    private void dibujarBordes(Graphics2D g2) {
+        int minX = snapshot.getLimiteMinX();
+        int minY = snapshot.getLimiteMinY();
+        int maxX = snapshot.getLimiteMaxX();
+        int maxY = snapshot.getLimiteMaxY();
+
+        BufferedImage imgPared = recursos.getImagenPared();
+
+        if (imgPared != null) {
+            // Borde superior
+            for (int x = minX; x <= maxX; x += TAMANIO_PARED) {
+                g2.drawImage(imgPared, x, minY - TAMANIO_PARED, TAMANIO_PARED, TAMANIO_PARED, null);
+            }
+
+            // Borde inferior
+            for (int x = minX; x <= maxX; x += TAMANIO_PARED) {
+                g2.drawImage(imgPared, x, maxY, TAMANIO_PARED, TAMANIO_PARED, null);
+            }
+
+            // Borde izquierdo
+            for (int y = minY; y <= maxY; y += TAMANIO_PARED) {
+                g2.drawImage(imgPared, minX - TAMANIO_PARED, y, TAMANIO_PARED, TAMANIO_PARED, null);
+            }
+
+            // Borde derecho
+            for (int y = minY; y <= maxY; y += TAMANIO_PARED) {
+                g2.drawImage(imgPared, maxX, y, TAMANIO_PARED, TAMANIO_PARED, null);
+            }
+
+            // Esquinas
+            g2.drawImage(imgPared, minX - TAMANIO_PARED, minY - TAMANIO_PARED, TAMANIO_PARED, TAMANIO_PARED, null);
+            g2.drawImage(imgPared, maxX, minY - TAMANIO_PARED, TAMANIO_PARED, TAMANIO_PARED, null);
+            g2.drawImage(imgPared, minX - TAMANIO_PARED, maxY, TAMANIO_PARED, TAMANIO_PARED, null);
+            g2.drawImage(imgPared, maxX, maxY, TAMANIO_PARED, TAMANIO_PARED, null);
+
+        } else {
+            // Respaldo: dibujar rectángulo simple
+            g2.setColor(Color.BLUE);
+            g2.setStroke(new BasicStroke(3f));
+            int ancho = maxX - minX;
+            int alto = maxY - minY;
+            g2.drawRect(minX, minY, ancho, alto);
+        }
+    }
+
+    /**
+     * Dibuja todas las frutas no comidas usando la imagen de comida.
+     *
+     * @param g2 contexto gráfico 2D
+     */
+    private void dibujarFrutas(Graphics2D g2) {
+        BufferedImage imgComida = recursos.getImagenComida();
+
+        for (int i = 0; i < snapshot.getNumFrutas(); i++) {
+            if (snapshot.isFrutaComida(i)) {
+                continue; // No dibujar frutas comidas
+            }
+
+            int fx = snapshot.getFrutaX(i);
+            int fy = snapshot.getFrutaY(i);
+
+            if (imgComida != null) {
+                // Dibujar imagen centrada en la posición
+                int x = fx - (TAMANIO_FRUTA / 2);
+                int y = fy - (TAMANIO_FRUTA / 2);
+                g2.drawImage(imgComida, x, y, TAMANIO_FRUTA, TAMANIO_FRUTA, null);
+            } else {
+                // Respaldo: dibujar cuadrado rojo
+                g2.setColor(Color.RED);
+                g2.fillRect(fx - 4, fy - 4, 8, 8);
+            }
+        }
+    }
+
+    /**
+     * Dibuja a Pac-Man usando la imagen correspondiente a su dirección actual.
+     *
+     * @param g2 contexto gráfico 2D
+     */
+    private void dibujarPacman(Graphics2D g2) {
+        int px = snapshot.getPacmanX();
+        int py = snapshot.getPacmanY();
+        String direccion = snapshot.getDireccionPacman();
+
+        BufferedImage imgPacman = recursos.getImagenPacman(direccion);
+
+        if (imgPacman != null) {
+            // Dibujar imagen centrada en la posición
+            int x = px - (TAMANIO_PACMAN / 2);
+            int y = py - (TAMANIO_PACMAN / 2);
+            g2.drawImage(imgPacman, x, y, TAMANIO_PACMAN, TAMANIO_PACMAN, null);
+        } else {
+            // Respaldo: dibujar círculo amarillo
+            g2.setColor(Color.YELLOW);
+            g2.fillOval(px - 10, py - 10, 20, 20);
+        }
+    }
+
+    /**
+     * Dibuja información adicional en pantalla (puntaje y coordenadas).
+     *
+     * @param g2 contexto gráfico 2D
+     */
+    private void dibujarInfo(Graphics2D g2) {
+        g2.setColor(COLOR_TEXTO);
+        g2.setFont(new Font("Arial", Font.BOLD, 14));
+
+        int minX = snapshot.getLimiteMinX();
+        int minY = snapshot.getLimiteMinY();
+
+        // Información del juego
+        g2.drawString("Puntaje: " + snapshot.getPuntaje(), minX + 8, minY - 5);
+
+        // Información de debug (opcional)
+        g2.setFont(new Font("Arial", Font.PLAIN, 10));
+        g2.setColor(new Color(150, 150, 150));
+        String coordenadas = String.format("Pos: (%d, %d)", snapshot.getPacmanX(), snapshot.getPacmanY());
+        g2.drawString(coordenadas, minX + 8, minY + 15);
+    }
+
+    /**
+     * Dibuja un mensaje de espera cuando no hay snapshot disponible.
+     *
+     * @param g contexto gráfico
+     */
+    private void dibujarMensajeEspera(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        String msg = "Esperando inicio del juego...";
+        FontMetrics fm = g.getFontMetrics();
         int w = fm.stringWidth(msg);
-        int h = fm.getAscent();
         int x = (getWidth() - w) / 2;
-        int y = (getHeight() + h) / 2;
-        g2.drawString(msg, x, y);
+        int y = getHeight() / 2;
+        g.drawString(msg, x, y);
     }
 }
