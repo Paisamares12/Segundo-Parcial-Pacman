@@ -1,6 +1,6 @@
 package udistrital.avanzada.parcial.cliente.api;
 
-import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
+import udistrital.avanzada.parcial.mensajes.RespuestaMovimiento;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -24,24 +24,17 @@ import java.beans.PropertyChangeListener;
  * <ul>
  * <li>Permitir la suscripción y eliminación de observadores (vistas).</li>
  * <li>Exponer métodos para que el controlador publique cambios de estado:
- * snapshot, habilitación de movimiento y mensajes de log.</li>
+ * respuesta de movimiento, habilitación de movimiento y mensajes de log.</li>
  * </ul>
  *
- * <h3>Implementación recomendada</h3>
- * <pre>{@code
- * public class ClienteEstado implements EstadoClienteObservable {
- *     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
- *     // ...
- * }
- * }</pre>
- *
  * @author Paula Martinez
- * @version 3.0
- * @since 2025-11-10
+ * @author Juan Sebastián Bravo Rojas
+ * @version 4.0
+ * @since 2025-11-11
  */
 public interface EstadoClienteObservable {
 
-    // ───── Observabilidad ──────────────────────────────────────────────
+    // ───── Observabilidad ──────────────────────────────────────────────────
     /**
      * Registra un oyente para recibir notificaciones de cambio de propiedad.
      *
@@ -58,14 +51,13 @@ public interface EstadoClienteObservable {
      */
     void removePropertyChangeListener(PropertyChangeListener l);
 
-    // ───── Publicación de cambios ─────────────────────────────────────
+    // ───── Publicación de cambios ──────────────────────────────────────────
     /**
-     * Publica un nuevo snapshot del tablero recibido desde el servidor.
+     * Publica una nueva respuesta de movimiento recibida desde el servidor.
      *
-     * @param s objeto {@link SnapshotTablero} que representa el estado del
-     * juego
+     * @param respuesta objeto {@link RespuestaMovimiento} con el resultado del movimiento
      */
-    void setSnapshot(SnapshotTablero s);
+    void setRespuestaMovimiento(RespuestaMovimiento respuesta);
 
     /**
      * Habilita o deshabilita los controles de movimiento en la UI.
@@ -80,4 +72,19 @@ public interface EstadoClienteObservable {
      * @param mensaje texto informativo o de error
      */
     void log(String mensaje);
+    
+    // ───── Consultas de estado ────────────────────────────────────────────
+    /**
+     * Verifica si el juego ha terminado.
+     *
+     * @return {@code true} si el juego terminó, {@code false} en caso contrario
+     */
+    boolean isJuegoTerminado();
+    
+    /**
+     * Verifica si el movimiento está habilitado.
+     *
+     * @return {@code true} si el movimiento está habilitado, {@code false} en caso contrario
+     */
+    boolean isMovHabilitado();
 }
