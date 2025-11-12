@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package udistrital.avanzada.parcial.cliente.persistencia;
 
 import udistrital.avanzada.parcial.cliente.modelo.ResultadoPartida;
@@ -13,22 +9,28 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * DAO para gestionar el archivo de acceso aleatorio con los resultados de las partidas.
+ * DAO para gestionar el archivo de acceso aleatorio con los resultados de las
+ * partidas.
  *
- * <p>Utiliza RandomAccessFile para almacenar y recuperar los resultados de
- * todas las partidas jugadas. Los resultados se guardan en registros de tamaño
- * fijo para permitir acceso aleatorio.</p>
+ * <p>
+ * Utiliza RandomAccessFile para almacenar y recuperar los resultados de todas
+ * las partidas jugadas. Los resultados se guardan en registros de tamaño fijo
+ * para permitir acceso aleatorio.</p>
  *
  * @author Juan Estevan Ariza Ortiz
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-11
  */
 public class RankingDAO {
 
-    /** Ruta del archivo de ranking */
+    /**
+     * Ruta del archivo de ranking
+     */
     private static final String RUTA_ARCHIVO = "src/data/ranking.dat";
 
-    /** Tamaño de cada registro en bytes */
+    /**
+     * Tamaño de cada registro en bytes
+     */
     private static final int TAMANIO_REGISTRO = 256;
 
     /**
@@ -39,7 +41,7 @@ public class RankingDAO {
      */
     public void guardarResultado(ResultadoPartida resultado) throws IOException {
         File archivo = new File(RUTA_ARCHIVO);
-        
+
         // Crear directorio si no existe
         File directorio = archivo.getParentFile();
         if (directorio != null && !directorio.exists()) {
@@ -95,7 +97,7 @@ public class RankingDAO {
                 resultado.setPuntajeTotal(raf.readInt());
                 resultado.setTiempoMs(raf.readLong());
                 resultado.setFrutasComidas(leerTextoFijo(raf, 50));
-                
+
                 // Leer fecha
                 int year = (int) raf.readLong();
                 int month = raf.readInt();
@@ -103,10 +105,10 @@ public class RankingDAO {
                 int hour = raf.readInt();
                 int minute = raf.readInt();
                 resultado.setFechaHora(LocalDateTime.of(year, month, day, hour, minute));
-                
+
                 // El ranking se calcula automáticamente al setear puntaje y tiempo
                 raf.readDouble(); // Leer el ranking guardado (ignorar, se recalcula)
-                
+
                 resultados.add(resultado);
             }
         }
@@ -126,13 +128,15 @@ public class RankingDAO {
      * @throws IOException si ocurre un error de E/S
      */
     private void escribirTextoFijo(RandomAccessFile raf, String texto, int maxChars) throws IOException {
-        if (texto == null) texto = "";
-        
+        if (texto == null) {
+            texto = "";
+        }
+
         // Truncar si es muy largo
         if (texto.length() > maxChars) {
             texto = texto.substring(0, maxChars);
         }
-        
+
         // Escribir caracteres (2 bytes cada uno para Unicode)
         for (int i = 0; i < maxChars; i++) {
             if (i < texto.length()) {

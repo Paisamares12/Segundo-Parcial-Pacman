@@ -25,26 +25,32 @@ package udistrital.avanzada.parcial.servidor.modelo;
  * Originalmente creada por Paula Martínez.<br>
  * Modificada por Juan Sebastián Bravo Rojas
  * </p>
- * 
+ *
  * @author Paula Martínez
- * @version 1.1
+ * @version 4.0
  * @since 2025-11-11
  */
 public enum Direccion {
 
-    /** Desplazamiento hacia arriba (dx = 0, dy = -1). */
+    /**
+     * Desplazamiento hacia arriba (dx = 0, dy = -1).
+     */
     ARRIBA(0, -1),
-
-    /** Desplazamiento hacia abajo (dx = 0, dy = 1). */
+    /**
+     * Desplazamiento hacia abajo (dx = 0, dy = 1).
+     */
     ABAJO(0, 1),
-
-    /** Desplazamiento hacia la izquierda (dx = -1, dy = 0). */
+    /**
+     * Desplazamiento hacia la izquierda (dx = -1, dy = 0).
+     */
     IZQUIERDA(-1, 0),
-
-    /** Desplazamiento hacia la derecha (dx = 1, dy = 0). */
+    /**
+     * Desplazamiento hacia la derecha (dx = 1, dy = 0).
+     */
     DERECHA(1, 0),
-
-    /** Sin desplazamiento (Pac-Man detenido). */
+    /**
+     * Sin desplazamiento (Pac-Man detenido).
+     */
     NINGUNA(0, 0);
 
     private final int dx;
@@ -74,14 +80,16 @@ public enum Direccion {
     }
 
     /**
-     * Convierte una cadena de texto en la dirección correspondiente.
-     * Si el valor no coincide con ninguna, devuelve {@link #NINGUNA}.
+     * Convierte una cadena de texto en la dirección correspondiente. Si el
+     * valor no coincide con ninguna, devuelve {@link #NINGUNA}.
      *
      * @param valor texto con el nombre de la dirección (por ejemplo "ARRIBA")
      * @return dirección equivalente o {@code NINGUNA} si no coincide
      */
     public static Direccion desdeTexto(String valor) {
-        if (valor == null) return NINGUNA;
+        if (valor == null) {
+            return NINGUNA;
+        }
         try {
             return Direccion.valueOf(valor.toUpperCase());
         } catch (IllegalArgumentException e) {

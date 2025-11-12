@@ -4,14 +4,15 @@ import java.util.List;
 import udistrital.avanzada.parcial.servidor.modelo.*;
 
 /**
- * Clase de utilidad encargada de construir objetos {@link SnapshotTablero}
- * a partir del estado actual del juego en el servidor.
+ * Clase de utilidad encargada de construir objetos {@link SnapshotTablero} a
+ * partir del estado actual del juego en el servidor.
  *
- * <p>Convierte el modelo (objetos complejos) en una estructura de datos
- * ligera y serializable que puede enviarse al cliente.</p>
+ * <p>
+ * Convierte el modelo (objetos complejos) en una estructura de datos ligera y
+ * serializable que puede enviarse al cliente.</p>
  *
- * @author Juan Sebastián Bravo Rojas
- * @version 1.0
+ * @author Paula Martínez
+ * @version 4.0
  * @since 2025-11-11
  */
 public class SnapshotFactory {
@@ -23,7 +24,9 @@ public class SnapshotFactory {
      * @return un snapshot serializable con la información necesaria
      */
     public static SnapshotTablero fromEstado(EstadoJuego estado) {
-        if (estado == null) return null;
+        if (estado == null) {
+            return null;
+        }
 
         SnapshotTablero snap = new SnapshotTablero();
 

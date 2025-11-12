@@ -19,8 +19,12 @@ import java.util.List;
  * resto de la aplicación conozca los detalles de la implementación de la base
  * de datos.</p>
  *
+ * <p>
+ * Modificado por Paula Martínez
+ * </p>
+ *
  * @author Juan Estevan Ariza Ortiz
- * @version 2.0
+ * @version 4.0
  * @since 2025-11-09
  */
 public class UsuarioDAO implements IUsuarioDAO {
@@ -227,28 +231,125 @@ public class UsuarioDAO implements IUsuarioDAO {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * Busca un jugador en la base de datos a partir de su nombre de usuario.
+     * </p>
+     *
+     * <p>
+     * Este método está pendiente de implementación. Actualmente lanza una
+     * excepción {@link UnsupportedOperationException}.
+     * </p>
+     *
+     * @param usuario nombre de usuario del jugador que se desea buscar.
+     * @return un objeto {@link JugadorVO} con la información del jugador
+     * encontrado, o {@code null} si no existe.
+     * @throws SQLException si ocurre un error al acceder a la base de datos.
+     * @throws UnsupportedOperationException siempre que el método no esté
+     * implementado.
+     */
     @Override
     public JugadorVO buscarPorUsuario(String usuario) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Método no implementado
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * Crea un nuevo registro de jugador en la base de datos con la información
+     * contenida en el objeto {@link JugadorVO}.
+     * </p>
+     *
+     * <p>
+     * Este método aún no está implementado.
+     * </p>
+     *
+     * @param jugador objeto con los datos del jugador a registrar.
+     * @return {@code true} si la operación se completa con éxito; {@code false}
+     * en caso contrario.
+     * @throws SQLException si ocurre un error al ejecutar la operación SQL.
+     * @throws UnsupportedOperationException siempre que el método no esté
+     * implementado.
+     */
     @Override
     public boolean crear(JugadorVO jugador) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Método no implementado
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * Actualiza la información de un jugador existente en la base de datos
+     * utilizando los datos contenidos en el objeto {@link JugadorVO}.
+     * </p>
+     *
+     * <p>
+     * Este método aún no está implementado.
+     * </p>
+     *
+     * @param jugador objeto que contiene la información actualizada del
+     * jugador.
+     * @return {@code true} si la actualización fue exitosa; {@code false} en
+     * caso contrario.
+     * @throws SQLException si ocurre un error en la ejecución de la sentencia
+     * SQL.
+     * @throws UnsupportedOperationException siempre que el método no esté
+     * implementado.
+     */
     @Override
     public boolean actualizar(JugadorVO jugador) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Método no implementado
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * Elimina de la base de datos al jugador identificado por su nombre de
+     * usuario.
+     * </p>
+     *
+     * <p>
+     * Este método aún no está implementado.
+     * </p>
+     *
+     * @param usuario nombre de usuario del jugador a eliminar.
+     * @return {@code true} si la eliminación fue exitosa; {@code false} en caso
+     * contrario.
+     * @throws SQLException si ocurre un error al acceder o modificar la base de
+     * datos.
+     * @throws UnsupportedOperationException siempre que el método no esté
+     * implementado.
+     */
     @Override
     public boolean eliminar(String usuario) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Método no implementado
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * Retorna una lista con todos los jugadores registrados en la base de
+     * datos.
+     * </p>
+     *
+     * <p>
+     * Este método aún no está implementado.
+     * </p>
+     *
+     * @return una lista de objetos {@link JugadorVO} con la información de
+     * todos los jugadores.
+     * @throws SQLException si ocurre un error al consultar la base de datos.
+     * @throws UnsupportedOperationException siempre que el método no esté
+     * implementado.
+     */
     @Override
     public List<JugadorVO> listarTodos() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Método no implementado
     }
 }

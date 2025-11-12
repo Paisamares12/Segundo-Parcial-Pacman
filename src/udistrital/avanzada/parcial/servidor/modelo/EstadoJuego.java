@@ -13,7 +13,7 @@ import java.util.List;
  * </p>
  *
  * @author Paula Martínez
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-06
  */
 public class EstadoJuego {

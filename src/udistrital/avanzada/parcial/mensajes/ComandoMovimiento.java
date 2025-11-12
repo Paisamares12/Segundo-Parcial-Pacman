@@ -20,7 +20,7 @@ import java.io.Serializable;
  * </ul>
  *
  * @author Paula Martínez
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-09
  */
 public class ComandoMovimiento implements Serializable {
@@ -47,10 +47,5 @@ public class ComandoMovimiento implements Serializable {
      */
     public String getDireccion() {
         return direccion;
-    }
-
-    @Override
-    public String toString() {
-        return "ComandoMovimiento{" + "direccion='" + direccion + '\'' + '}';
     }
 }

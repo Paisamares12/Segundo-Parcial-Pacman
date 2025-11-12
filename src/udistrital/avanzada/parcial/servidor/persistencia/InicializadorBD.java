@@ -8,23 +8,26 @@ import udistrital.avanzada.parcial.cliente.modelo.JugadorVO;
 import udistrital.avanzada.parcial.cliente.modelo.dao.UsuarioDAO;
 
 /**
- * Clase de persistencia encargada de cargar usuarios desde un archivo .properties
- * a la base de datos MySQL.
+ * Clase de persistencia encargada de cargar usuarios desde un archivo
+ * .properties a la base de datos MySQL.
  *
- * <p>Esta clase no contiene ninguna interfaz ni control de flujo.
- * Su única responsabilidad es leer el archivo de propiedades y
- * registrar los usuarios en la base de datos usando UsuarioDAO.</p>
+ * <p>
+ * Esta clase no contiene ninguna interfaz ni control de flujo. Su única
+ * responsabilidad es leer el archivo de propiedades y registrar los usuarios en
+ * la base de datos usando UsuarioDAO.</p>
  *
  * @author Juan Sebastián Bravo Rojas
- * @version 3.0
+ * @version 4.0
  * @since 2025-11-06
  */
 public class InicializadorBD {
 
     /**
-     * Carga los usuarios definidos en un archivo .properties a la base de datos MySQL.
+     * Carga los usuarios definidos en un archivo .properties a la base de datos
+     * MySQL.
      *
-     * @param rutaArchivo ruta del archivo .properties con las credenciales de los usuarios
+     * @param rutaArchivo ruta del archivo .properties con las credenciales de
+     * los usuarios
      * @throws IOException si ocurre un error al leer el archivo
      * @throws SQLException si ocurre un error al acceder a la base de datos
      */

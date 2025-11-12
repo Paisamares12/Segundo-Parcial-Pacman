@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package udistrital.avanzada.parcial.servidor.vista;
 
 import javax.imageio.ImageIO;
@@ -12,41 +8,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Clase utilitaria responsable de cargar y gestionar los recursos gráficos
- * del juego (imágenes).
+ * Clase utilitaria responsable de cargar y gestionar los recursos gráficos del
+ * juego (imágenes).
  *
- * <p>Implementa el patrón Singleton para garantizar una única instancia de
- * carga de recursos y cacheo de imágenes.</p>
+ * <p>
+ * Implementa el patrón Singleton para garantizar una única instancia de carga
+ * de recursos y cacheo de imágenes.</p>
  *
- * <p>Las imágenes se cargan desde el directorio {@code /Imagenes/} en el
- * classpath y se mantienen en memoria para acceso rápido.</p>
+ * <p>
+ * Las imágenes se cargan desde el directorio {@code /Imagenes/} en el classpath
+ * y se mantienen en memoria para acceso rápido.</p>
  *
  * <h3>Recursos disponibles:</h3>
  * <ul>
- *   <li>Pac-Man en cuatro direcciones (arriba, abajo, izquierda, derecha)</li>
- *   <li>Imagen de comida (frutas)</li>
- *   <li>Imagen de pared (bordes del tablero)</li>
+ * <li>Pac-Man en cuatro direcciones (arriba, abajo, izquierda, derecha)</li>
+ * <li>Imagen de comida (frutas)</li>
+ * <li>Imagen de pared (bordes del tablero)</li>
  * </ul>
  *
- * <p>Cumple con SOLID:</p>
+ * <p>
+ * Cumple con SOLID:</p>
  * <ul>
- *   <li><b>S - Single Responsibility:</b> Solo se encarga de cargar recursos</li>
- *   <li><b>O - Open/Closed:</b> Fácil agregar nuevos recursos sin modificar código existente</li>
+ * <li><b>S - Single Responsibility:</b> Solo se encarga de cargar recursos</li>
+ * <li><b>O - Open/Closed:</b> Fácil agregar nuevos recursos sin modificar
+ * código existente</li>
  * </ul>
  *
  * @author Juan Estevan Ariza Ortiz
- * @version 1.0
+ * @version 4.0
  * @since 2025-11-11
  */
 public class CargadorRecursos {
 
-    /** Instancia única del cargador (Singleton) */
+    /**
+     * Instancia única del cargador (Singleton)
+     */
     private static CargadorRecursos instancia;
 
-    /** Caché de imágenes cargadas */
+    /**
+     * Caché de imágenes cargadas
+     */
     private final Map<String, BufferedImage> imagenes;
 
-    /** Ruta base de los recursos de imagen */
+    /**
+     * Ruta base de los recursos de imagen
+     */
     private static final String RUTA_BASE = "/Imagenes/";
 
     // Nombres de los archivos de recursos
@@ -58,8 +64,8 @@ public class CargadorRecursos {
     private static final String IMG_PARED = "Pared.png";
 
     /**
-     * Constructor privado para implementar Singleton.
-     * Inicializa el caché de imágenes.
+     * Constructor privado para implementar Singleton. Inicializa el caché de
+     * imágenes.
      */
     private CargadorRecursos() {
         this.imagenes = new HashMap<>();
@@ -80,8 +86,9 @@ public class CargadorRecursos {
     /**
      * Carga todas las imágenes necesarias para el juego.
      *
-     * <p>Este método debe llamarse una vez al iniciar la aplicación.
-     * Las imágenes se mantienen en caché para acceso rápido posterior.</p>
+     * <p>
+     * Este método debe llamarse una vez al iniciar la aplicación. Las imágenes
+     * se mantienen en caché para acceso rápido posterior.</p>
      *
      * @throws IOException si alguna imagen no puede ser cargada
      */
@@ -135,7 +142,8 @@ public class CargadorRecursos {
      * Obtiene la imagen de Pac-Man según la dirección especificada.
      *
      * @param direccion dirección de Pac-Man (en texto: "ARRIBA", "ABAJO", etc.)
-     * @return imagen correspondiente a la dirección, o imagen hacia derecha por defecto
+     * @return imagen correspondiente a la dirección, o imagen hacia derecha por
+     * defecto
      */
     public BufferedImage getImagenPacman(String direccion) {
         if (direccion == null || direccion.isEmpty()) {
@@ -171,9 +179,9 @@ public class CargadorRecursos {
      * @return true si todas las imágenes están disponibles
      */
     public boolean recursosDisponibles() {
-        return imagenes.size() == 6 && 
-               getImagenComida() != null &&
-               getImagenPacman("ARRIBA") != null &&
-               getImagenPared() != null;
+        return imagenes.size() == 6
+                && getImagenComida() != null
+                && getImagenPacman("ARRIBA") != null
+                && getImagenPared() != null;
     }
 }

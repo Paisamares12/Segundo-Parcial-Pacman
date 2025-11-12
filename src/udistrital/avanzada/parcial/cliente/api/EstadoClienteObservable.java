@@ -27,8 +27,12 @@ import java.beans.PropertyChangeListener;
  * respuesta de movimiento, habilitación de movimiento y mensajes de log.</li>
  * </ul>
  *
+ * <p>
+ * Originalmente hecho por Paula Martínez, pero modificado por Juan Sebastián
+ * Bravo Rojas
+ * </p>
+ *
  * @author Paula Martinez
- * @author Juan Sebastián Bravo Rojas
  * @version 4.0
  * @since 2025-11-11
  */
@@ -55,7 +59,8 @@ public interface EstadoClienteObservable {
     /**
      * Publica una nueva respuesta de movimiento recibida desde el servidor.
      *
-     * @param respuesta objeto {@link RespuestaMovimiento} con el resultado del movimiento
+     * @param respuesta objeto {@link RespuestaMovimiento} con el resultado del
+     * movimiento
      */
     void setRespuestaMovimiento(RespuestaMovimiento respuesta);
 
@@ -72,7 +77,7 @@ public interface EstadoClienteObservable {
      * @param mensaje texto informativo o de error
      */
     void log(String mensaje);
-    
+
     // ───── Consultas de estado ────────────────────────────────────────────
     /**
      * Verifica si el juego ha terminado.
@@ -80,11 +85,12 @@ public interface EstadoClienteObservable {
      * @return {@code true} si el juego terminó, {@code false} en caso contrario
      */
     boolean isJuegoTerminado();
-    
+
     /**
      * Verifica si el movimiento está habilitado.
      *
-     * @return {@code true} si el movimiento está habilitado, {@code false} en caso contrario
+     * @return {@code true} si el movimiento está habilitado, {@code false} en
+     * caso contrario
      */
     boolean isMovHabilitado();
 }

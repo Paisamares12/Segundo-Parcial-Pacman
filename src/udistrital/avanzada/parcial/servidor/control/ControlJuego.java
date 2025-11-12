@@ -8,33 +8,36 @@ import udistrital.avanzada.parcial.mensajes.SnapshotTablero;
 /**
  * Controlador responsable del "motor" del juego en el servidor.
  *
- * 
- * 
+ *
+ *
  * "MODIFICACION"
  * <p>
  * Maneja la lógica del juego incluyendo:
  * <ul>
- *   <li>Movimiento de Pac-Man según comandos recibidos</li>
- *   <li>Detección de colisiones con paredes</li>
- *   <li>Detección de colisiones con frutas y actualización de puntaje</li>
- *   <li>Notificación a la capa de interfaz para refrescar la vista</li>
+ * <li>Movimiento de Pac-Man según comandos recibidos</li>
+ * <li>Detección de colisiones con paredes</li>
+ * <li>Detección de colisiones con frutas y actualización de puntaje</li>
+ * <li>Notificación a la capa de interfaz para refrescar la vista</li>
  * </ul>
  * </p>
  *
- * TODO: Se modificó la idea de esta clase, implementación posibles pero es obligatoria?
+ * TODO: Se modificó la idea de esta clase, implementación posibles pero es
+ * obligatoria?
  * <p>
- * Importante: <b>no</b> realiza operaciones de red ni de persistencia. Las clases
- * encargadas de red (por ejemplo {@code ManejadorCliente}) deben:
+ * Importante: <b>no</b> realiza operaciones de red ni de persistencia. Las
+ * clases encargadas de red (por ejemplo {@code ManejadorCliente}) deben:
  * <ul>
- *   <li>invocar {@link #procesarComando(Direccion)} al recibir comandos del cliente</li>
- *   <li>consultar {@link #getEstadoActual()} para obtener información actualizada</li>
+ * <li>invocar {@link #procesarComando(Direccion)} al recibir comandos del
+ * cliente</li>
+ * <li>consultar {@link #getEstadoActual()} para obtener información
+ * actualizada</li>
  * </ul>
  * </p>
- * 
+ *
  * Modificada: Juan Ariza
- * 
+ *
  * @author Juan Sebastián Bravo Rojas
- * @version 1.2
+ * @version 4.0
  * @since 2025-11-11
  */
 public class ControlJuego {
@@ -45,8 +48,10 @@ public class ControlJuego {
     /**
      * Crea el controlador de juego.
      *
-     * @param estado instancia compartida de {@link EstadoJuego} (debe venir inicializada)
-     * @param controlInterfaz controlador de interfaz del servidor para refrescar la UI (opcional, puede ser null)
+     * @param estado instancia compartida de {@link EstadoJuego} (debe venir
+     * inicializada)
+     * @param controlInterfaz controlador de interfaz del servidor para
+     * refrescar la UI (opcional, puede ser null)
      */
     public ControlJuego(EstadoJuego estado, ControlInterfazServidor controlInterfaz) {
         this.estado = estado;
@@ -56,17 +61,19 @@ public class ControlJuego {
     /**
      * Procesa un comando de movimiento de forma síncrona.
      *
-     * <p>Este método ejecuta un ciclo completo de actualización:</p>
+     * <p>
+     * Este método ejecuta un ciclo completo de actualización:</p>
      * <ol>
-     *   <li>Intenta mover a Pac-Man en la dirección especificada</li>
-     *   <li>Detecta colisión con paredes (límites del tablero)</li>
-     *   <li>Detecta colisión con frutas</li>
-     *   <li>Actualiza el puntaje si corresponde</li>
-     *   <li>Refresca la interfaz del servidor</li>
+     * <li>Intenta mover a Pac-Man en la dirección especificada</li>
+     * <li>Detecta colisión con paredes (límites del tablero)</li>
+     * <li>Detecta colisión con frutas</li>
+     * <li>Actualiza el puntaje si corresponde</li>
+     * <li>Refresca la interfaz del servidor</li>
      * </ol>
      *
      * @param direccion dirección del movimiento solicitado
-     * @return objeto con el resultado del movimiento (colisiones, frutas comidas, puntos)
+     * @return objeto con el resultado del movimiento (colisiones, frutas
+     * comidas, puntos)
      */
     public synchronized ResultadoMovimiento procesarComando(Direccion direccion) {
         boolean chocoConPared = false;
@@ -97,9 +104,10 @@ public class ControlJuego {
     /**
      * Intenta mover a Pac-Man en la dirección indicada.
      *
-     * <p>Aplica el desplazamiento según {@link ConstantesJuego#PASO_PIXELES}
-     * y verifica si la nueva posición está dentro de los límites. Si está
-     * fuera, NO mueve a Pac-Man y retorna true indicando colisión con pared.</p>
+     * <p>
+     * Aplica el desplazamiento según {@link ConstantesJuego#PASO_PIXELES} y
+     * verifica si la nueva posición está dentro de los límites. Si está fuera,
+     * NO mueve a Pac-Man y retorna true indicando colisión con pared.</p>
      *
      * @param direccion dirección del movimiento
      * @return true si chocó con una pared, false si el movimiento fue válido
@@ -123,8 +131,8 @@ public class ControlJuego {
         LimitesTablero limites = estado.getLimites();
         if (limites != null) {
             // Detectar colisión con pared ANTES de mover
-            if (nx < limites.getMinX() || nx > limites.getMaxX() ||
-                ny < limites.getMinY() || ny > limites.getMaxY()) {
+            if (nx < limites.getMinX() || nx > limites.getMaxX()
+                    || ny < limites.getMinY() || ny > limites.getMaxY()) {
                 // Colisión con pared - NO mover
                 System.out.println("¡Colisión con pared! Posición intentada: (" + nx + "," + ny + ")");
                 return true;
@@ -139,8 +147,8 @@ public class ControlJuego {
     }
 
     /**
-     * Detecta colisiones entre Pac-Man y las frutas, marcándolas como
-     * comidas y acumulando el puntaje correspondiente.
+     * Detecta colisiones entre Pac-Man y las frutas, marcándolas como comidas y
+     * acumulando el puntaje correspondiente.
      */
     private void detectarColisionesFrutas() {
         Pacman pac = estado.getPacman();
@@ -174,12 +182,13 @@ public class ControlJuego {
     }
 
     /**
-     * Verifica si dos posiciones colisionan según el radio de colisión
-     * definido en {@link ConstantesJuego#RADIO_COLISION}.
+     * Verifica si dos posiciones colisionan según el radio de colisión definido
+     * en {@link ConstantesJuego#RADIO_COLISION}.
      *
      * @param a primera posición (normalmente Pac-Man)
      * @param b segunda posición (fruta)
-     * @return true si la distancia euclidiana es menor o igual al radio de colisión
+     * @return true si la distancia euclidiana es menor o igual al radio de
+     * colisión
      */
     private boolean colisiona(Posicion a, Posicion b) {
         int dx = a.getX() - b.getX();
@@ -238,4 +247,3 @@ public class ControlJuego {
                 .count();
     }
 }
-
